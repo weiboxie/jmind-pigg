@@ -18,15 +18,17 @@ package jmind.pigg.operator;
 
 import javax.sql.DataSource;
 
+import jmind.base.util.Iterables;
+import jmind.base.util.ToStringHelper;
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.exception.DescriptionException;
+import jmind.pigg.jdbc.JdbcOperationsFactory;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.stat.InvocationStat;
 import jmind.pigg.transaction.*;
-import jmind.pigg.util.Iterables;
-import jmind.pigg.util.ToStringHelper;
+
 
 import java.util.*;
 
@@ -74,10 +76,8 @@ public class BatchUpdateOperator extends AbstractOperator {
     }
 
     rootNode.render(context);
-    BoundSql boundSql = context.getBoundSql();
-    invocationInterceptorChain.intercept(boundSql, context, ds); // 拦截器
-
-    group.add(boundSql, position);
+    invocationInterceptorChain.preIntercept(context, ds); // 拦截器
+    group.add(context.getBoundSql(), position);
   }
 
   protected Iterables getIterables(Object[] values) {
@@ -100,7 +100,7 @@ public class BatchUpdateOperator extends AbstractOperator {
         List<Integer> positions = entry.getValue().getPositions();
         int[] ints = config.isUseTransactionForBatchUpdate() ?
             useTransactionBatchUpdate(ds, boundSqls) :
-            jdbcOperations.batchUpdate(ds, boundSqls);
+                JdbcOperationsFactory.getJdbcOperations().batchUpdate(ds, boundSqls);
         for (int i = 0; i < ints.length; i++) {
           r[positions.get(i)] = ints[i];
         }
@@ -121,7 +121,7 @@ public class BatchUpdateOperator extends AbstractOperator {
     int[] ints;
     Transaction transaction = TransactionFactory.newTransaction(ds);
     try {
-      ints = jdbcOperations.batchUpdate(ds, boundSqls);
+      ints = JdbcOperationsFactory.getJdbcOperations().batchUpdate(ds, boundSqls);
     } catch (RuntimeException e) {
       transaction.rollback();
       throw e;

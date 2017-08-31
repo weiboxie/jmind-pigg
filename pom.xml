@@ -19,11 +19,15 @@
         <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
         <maven.compiler.testSource>1.8</maven.compiler.testSource>
         <maven.compiler.testCompilerArgument>-parameters</maven.compiler.testCompilerArgument>
-        <javadoc.version>2.9.1</javadoc.version>
+        <javadoc.version>2.7</javadoc.version>
     </properties>
 
 
     <dependencies>
+        <dependency>
+            <groupId>net.oschina.jmind</groupId>
+            <artifactId>jmind-base</artifactId>
+        </dependency>
         <!-- spring plugin -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -127,6 +131,32 @@
             <artifactId>jetty-servlet</artifactId>
             <version>8.1.16.v20140903</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <scope>test</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <scope>test</scope>
+            <optional>true</optional>
         </dependency>
        
     </dependencies>

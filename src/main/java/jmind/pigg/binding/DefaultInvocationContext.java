@@ -19,6 +19,7 @@ package jmind.pigg.binding;
 import javax.annotation.Nullable;
 
 import jmind.pigg.type.TypeHandler;
+import jmind.pigg.type.TypeHandlerRegistry;
 
 import java.util.*;
 
@@ -100,14 +101,27 @@ public class DefaultInvocationContext implements InvocationContext {
   }
 
   @Override
+  public void appendToArgs(Object obj) {
+    TypeHandler<?> typeHandler = TypeHandlerRegistry.getTypeHandler(obj.getClass());
+    args.add(obj);
+    typeHandlers.add(typeHandler);
+  }
+
   public void appendToArgs(Object obj, TypeHandler<?> typeHandler) {
     args.add(obj);
     typeHandlers.add(typeHandler);
   }
 
+
+
   @Override
   public BoundSql getBoundSql() {
     return new BoundSql(sql.toString(), args, typeHandlers);
+  }
+
+  @Override
+  public StringBuilder getSql() {
+    return sql;
   }
 
   @Override

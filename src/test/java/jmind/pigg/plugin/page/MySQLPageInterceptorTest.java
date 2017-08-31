@@ -16,25 +16,19 @@
 
 package jmind.pigg.plugin.page;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import com.alibaba.fastjson.JSON;
 import jmind.pigg.annotation.DB;
 import jmind.pigg.annotation.GeneratedId;
 import jmind.pigg.annotation.SQL;
+import jmind.pigg.crud.CrudRepository;
 import jmind.pigg.operator.Pigg;
 import jmind.pigg.support.DataSourceConfig;
-import jmind.pigg.support.Table;
 import jmind.pigg.support.model4table.Msg;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author xieweibo
@@ -43,18 +37,24 @@ public class MySQLPageInterceptorTest {
 
   private final static DataSource ds = DataSourceConfig.getDataSource();
   private static MsgDao dao;
-  {
+
+  public static void main(String[] args) {
+
     Pigg pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new MySQLPageInterceptor());
     dao = pigg.create(MsgDao.class);
-  }
+    Msg msg=new Msg();
+    msg.setId(12);
+    msg.setPid(10);
+    msg.setContent("wavsss");
+     int insert=dao.save(msg);
+  System.err.println("ii="+insert);
 
+  }
   //@Before
-  public void before() throws Exception {
-    Table.MSG.load(ds);
-  }
 
-  @Test
+
+
   public void interceptQuery() throws Exception {
     if (DataSourceConfig.isUseMySQL()) {
       int uid = 102;
@@ -74,7 +74,7 @@ public class MySQLPageInterceptorTest {
 
       Page page = Page.create(1, 5);
      page.setOderBy(" id desc");
-      List<Msg> msgs = dao.getMsgs(uid, page);
+      List<Msg> msgs = dao.getMsgs(1,page);
      System.out.println("ss="+msgs);
 //      assertThat(page.getTotal(), is(10));
 //      assertThat(msgs.size(), is(3));
@@ -101,15 +101,26 @@ public class MySQLPageInterceptorTest {
     }
   }
 
-  @DB
-  interface MsgDao {
+  @DB(table="msg2")
+  interface MsgDao extends CrudRepository<Msg,Integer> {
 
     @GeneratedId
     @SQL("insert into msg(uid, content) values(:uid, :content)")
     public int insert(Msg msg);
 
     @SQL("select id, uid, content from msg where uid = :1")
-    public List<Msg> getMsgs(int uid, Page page);
+    public List<Msg> getMsgs( int uid,Page page);
+
+    @SQL("select id, uid, content from msg where uid = :1 #if(:2>0) and pid>0 #end")
+    public List<Msg> gets(int uid, int pid);
+
+
+    public List<Msg>  getByUid(int uid,Page page);
+
+    public List<Msg>  getByUid(int uid);
+
+    @SQL("select * from #table")
+    public List<Msg> selectAll();
 
   }
 

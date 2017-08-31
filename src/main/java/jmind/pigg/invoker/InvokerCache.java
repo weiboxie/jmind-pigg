@@ -18,12 +18,13 @@ package jmind.pigg.invoker;
 
 import javax.annotation.Nullable;
 
+import jmind.base.cache.CacheLoader;
+import jmind.base.cache.DoubleCheckCache;
+import jmind.base.cache.LoadingCache;
+import jmind.base.util.bean.BeanUtil;
+import jmind.base.util.bean.PropertyMeta;
 import jmind.pigg.exception.UncheckedException;
-import jmind.pigg.util.bean.BeanUtil;
-import jmind.pigg.util.bean.PropertyMeta;
-import jmind.pigg.util.local.CacheLoader;
-import jmind.pigg.util.local.DoubleCheckCache;
-import jmind.pigg.util.local.LoadingCache;
+
 
 import java.lang.reflect.Method;
 import java.util.*;

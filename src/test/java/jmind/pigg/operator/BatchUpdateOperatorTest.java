@@ -38,7 +38,7 @@ import jmind.pigg.stat.InvocationStat;
 import jmind.pigg.stat.MetaStat;
 import jmind.pigg.support.*;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
@@ -64,20 +64,6 @@ public class BatchUpdateOperatorTest {
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String sql = boundSqls.get(0).getSql();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
 
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     Object actual = operator.execute(new Object[]{users}, InvocationStat.create());
@@ -93,26 +79,8 @@ public class BatchUpdateOperatorTest {
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String sql = boundSqls.get(0).getSql();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
 
-    List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
-    int actual = (Integer) operator.execute(new Object[]{users}, InvocationStat.create());
-    assertThat(actual, is(3));
   }
-
   @Test
   public void testExecuteReturnIntArray() throws Exception {
     TypeToken<List<User>> pt = new TypeToken<List<User>>() {
@@ -122,20 +90,7 @@ public class BatchUpdateOperatorTest {
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String sql = boundSqls.get(0).getSql();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
+
 
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     int[] actualInts = (int[]) operator.execute(new Object[]{users}, InvocationStat.create());
@@ -151,20 +106,7 @@ public class BatchUpdateOperatorTest {
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String sql = boundSqls.get(0).getSql();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
+
 
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     Integer[] actualInts = (Integer[]) operator.execute(new Object[]{users}, InvocationStat.create());
@@ -180,49 +122,7 @@ public class BatchUpdateOperatorTest {
     String srcSql = "update #table set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator2(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
 
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) throws DataAccessException {
-        if (boundSqls.size() == 3) {
-          List<String> descSqls = Arrays.asList(
-              "update user_30 set name=? where id=?",
-              "update user_10 set name=? where id=?",
-              "update user_20 set name=? where id=?");
-          List<String> sqls = new ArrayList<String>();
-          for (BoundSql boundSql : boundSqls) {
-            sqls.add(boundSql.getSql());
-          }
-          assertThat(sqls, equalTo(descSqls));
-          assertThat(boundSqls.size(), equalTo(3));
-          assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-          assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 30));
-          assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lily"));
-          assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 10));
-          assertThat(boundSqls.get(2).getArgs().get(0), equalTo((Object) "gill"));
-          assertThat(boundSqls.get(2).getArgs().get(1), equalTo((Object) 20));
-          return new int[] {3, 1, 2};
-        } else if (boundSqls.size() == 2) {
-          List<String> descSqls = Arrays.asList(
-              "update user_60 set name=? where id=?",
-              "update user_55 set name=? where id=?");
-          List<String> sqls = new ArrayList<String>();
-          for (BoundSql boundSql : boundSqls) {
-            sqls.add(boundSql.getSql());
-          }
-          assertThat(sqls, equalTo(descSqls));
-          assertThat(boundSqls.size(), equalTo(2));
-          assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "lucy"));
-          assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 60));
-          assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "liu"));
-          assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 55));
-          return new int[] {6, 5};
-        } else {
-          throw new IllegalStateException();
-        }
-      }
-
-    });
 
     List<User> users = Arrays.asList(
         new User(30, "ash"), new User(60, "lucy"), new User(10, "lily"),
@@ -239,19 +139,7 @@ public class BatchUpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String descSql = "update user set name=? where id=?";
-        assertThat(boundSqls.get(0).getSql(), equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return new int[]{9, 7};
-      }
-    });
+
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{users}, stat);
@@ -259,7 +147,7 @@ public class BatchUpdateOperatorTest {
     operator.execute(new Object[]{users}, stat);
     assertThat(stat.getDatabaseExecuteSuccessCount(), equalTo(2L));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter());
+
     try {
       operator.execute(new Object[]{users}, stat);
     } catch (UnsupportedOperationException e) {
@@ -288,19 +176,7 @@ public class BatchUpdateOperatorTest {
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) {
-        String descSql = "update user set name=? where id=?";
-        assertThat(boundSqls.get(0).getSql(), equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
+
 
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     operator.execute(new Object[]{users}, InvocationStat.create());

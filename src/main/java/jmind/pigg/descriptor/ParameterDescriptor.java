@@ -16,11 +16,13 @@
 
 package jmind.pigg.descriptor;
 
+import jmind.base.util.Objects;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import jmind.pigg.util.Objects;
+
 
 /**
  * 方法参数描述

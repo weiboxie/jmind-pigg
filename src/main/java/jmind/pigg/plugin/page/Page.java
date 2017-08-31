@@ -25,15 +25,17 @@ public class Page {
   /**
    * 页码，从1开始
    */
-  private int pageNum;
+  private int page=1;
   /**
    * 页面大小
    */
-  private int pageSize;
+  private int pageSize=10;
 
-  private int total;
+  private long total;
   private String groupBy ;
-  private String OderBy ;
+  private String oderBy;
+
+  private Object result ;
 
   public String getGroupBy() {
     return groupBy;
@@ -44,11 +46,11 @@ public void setGroupBy(String groupBy) {
 }
 
 public String getOderBy() {
-    return OderBy;
+    return oderBy;
 }
 
 public void setOderBy(String oderBy) {
-    OderBy = oderBy;
+    this.oderBy = oderBy;
 }
 
   public Page() {
@@ -57,7 +59,7 @@ public void setOderBy(String oderBy) {
 
   public static Page create(int pageNum, int pageSize) {
     Page page= new Page();
-    page.setPageNum(pageNum);
+    page.setPage(pageNum);
     page.setPageSize(pageSize);
     return page;
   }
@@ -70,12 +72,12 @@ public void setOderBy(String oderBy) {
     isFetchTotal = fetchTotal;
   }
 
-  public int getPageNum() {
-    return pageNum;
+  public int getPage() {
+    return page;
   }
 
-  public void setPageNum(int pageNum) {
-    this.pageNum = pageNum;
+  public void setPage(int page) {
+    this.page = page;
   }
 
   public int getPageSize() {
@@ -86,11 +88,20 @@ public void setOderBy(String oderBy) {
     this.pageSize = pageSize;
   }
 
-  public int getTotal() {
+  public long getTotal() {
     return total;
   }
 
-  public void setTotal(int total) {
+  public void setTotal(long total) {
     this.total = total;
+  }
+
+
+  public Object getResult() {
+    return result;
+  }
+
+  public void setResult(Object result) {
+    this.result = result;
   }
 }

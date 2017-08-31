@@ -24,7 +24,7 @@ import jmind.pigg.annotation.Setter;
 import jmind.pigg.invoker.FunctionalSetterInvoker;
 import jmind.pigg.invoker.SetterFunction;
 import jmind.pigg.invoker.SetterInvoker;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import org.junit.Rule;
 import org.junit.Test;

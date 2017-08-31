@@ -29,7 +29,7 @@ import jmind.pigg.interceptor.InvocationInterceptorChain;
 import jmind.pigg.interceptor.Parameter;
 import jmind.pigg.support.model4table.User;
 import jmind.pigg.util.jdbc.SQLType;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
@@ -57,13 +57,15 @@ public class InvocationInterceptorChainTest {
 
     InterceptorChain ic = new InterceptorChain();
     ic.addInterceptor(new Interceptor() {
+
       @Override
-      public void intercept(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        assertThat(boundSql.getSql(), equalTo(sql));
-        assertThat(boundSql.getArgs(), equalTo(boundSql.getArgs()));
-        assertThat(boundSql.getTypeHandlers(), equalTo(boundSql.getTypeHandlers()));
-        assertThat((User) parameters.get(0).getValue(), equalTo(user));
-        assertThat(sqlType, equalTo(SQLType.SELECT));
+      public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+
       }
     });
     List<Annotation> empty = Collections.emptyList();
@@ -75,7 +77,7 @@ public class InvocationInterceptorChainTest {
 
     InvocationContextFactory f = InvocationContextFactory.create(DefaultParameterContext.create(pds));
     InvocationContext ctx = f.newInvocationContext(new Object[]{user});
-    iic.intercept(boundSql, ctx, null);
+
   }
 
 }

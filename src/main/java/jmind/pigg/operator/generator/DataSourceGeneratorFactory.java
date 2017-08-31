@@ -18,6 +18,9 @@ package jmind.pigg.operator.generator;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.reflect.ClassUtil;
+import jmind.base.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeWrapper;
 import jmind.pigg.annotation.DatabaseShardingBy;
 import jmind.pigg.annotation.Sharding;
 import jmind.pigg.annotation.ShardingBy;
@@ -32,9 +35,7 @@ import jmind.pigg.exception.IncorrectParameterTypeException;
 import jmind.pigg.sharding.DatabaseShardingStrategy;
 import jmind.pigg.sharding.NotUseDatabaseShardingStrategy;
 import jmind.pigg.sharding.NotUseShardingStrategy;
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TypeToken;
-import jmind.pigg.util.reflect.TypeWrapper;
+
 
 import java.lang.reflect.Type;
 
@@ -117,12 +118,12 @@ public class DataSourceGeneratorFactory {
     }
     Class<? extends DatabaseShardingStrategy> strategyClass = shardingAnno.databaseShardingStrategy();
     if (!strategyClass.equals(NotUseDatabaseShardingStrategy.class)) {
-      DatabaseShardingStrategy strategy = Reflection.instantiateClass(strategyClass);
+      DatabaseShardingStrategy strategy = ClassUtil.instantiateClass(strategyClass);
       return strategy;
     }
     strategyClass = shardingAnno.shardingStrategy();
     if (!strategyClass.equals(NotUseShardingStrategy.class)) {
-      DatabaseShardingStrategy strategy = Reflection.instantiateClass(strategyClass);
+      DatabaseShardingStrategy strategy = ClassUtil.instantiateClass(strategyClass);
       return strategy;
     }
     return null;

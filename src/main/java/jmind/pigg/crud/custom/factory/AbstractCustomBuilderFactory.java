@@ -16,8 +16,10 @@
 
 package jmind.pigg.crud.custom.factory;
 
-import javax.annotation.Nullable;
-
+import jmind.base.util.DataUtil;
+import jmind.base.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeWrapper;
+import jmind.base.util.reflect.Types;
 import jmind.pigg.crud.Builder;
 import jmind.pigg.crud.BuilderFactory;
 import jmind.pigg.crud.CrudException;
@@ -26,11 +28,10 @@ import jmind.pigg.crud.custom.builder.AbstractCustomBuilder;
 import jmind.pigg.crud.custom.parser.*;
 import jmind.pigg.crud.custom.parser.op.Op;
 import jmind.pigg.crud.custom.parser.op.Param1ForCollectionOp;
-import jmind.pigg.util.Strings;
-import jmind.pigg.util.reflect.TypeToken;
-import jmind.pigg.util.reflect.TypeWrapper;
-import jmind.pigg.util.reflect.Types;
+import jmind.pigg.plugin.page.Page;
 
+
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,7 +64,7 @@ public abstract class AbstractCustomBuilderFactory extends BuilderFactory {
 
   private int metchSize(String name) {
     for (String prefix : prefixs()) {
-      if (Strings.isEmpty(prefix)) {
+      if (DataUtil.isEmpty(prefix)) {
         throw new IllegalStateException("prefix can't be empty");
       }
       Pattern p = Pattern.compile(prefix + "[A-Z]");
@@ -89,8 +90,12 @@ public abstract class AbstractCustomBuilderFactory extends BuilderFactory {
       count = count + opUnit.getOp().paramCount();
     }
     if (count != parameterTypes.size()) {
-      throw new CrudException("the name of method [" + methodName + "] is error, " +
-          "the number of parameters expected " + count + ", but " + parameterTypes.size());
+        if((count+1)==parameterTypes.size() && parameterTypes.get(count)==Page.class){
+            // 只允许最后一个参数是Page ，合法
+        }else{
+          throw new CrudException("the name of method [" + methodName + "] is error, " +
+                  "the number of parameters expected " + count + ", but " + parameterTypes.size());
+        }
     }
     tailOfSql.append("where ");
     int paramIndex = 1;

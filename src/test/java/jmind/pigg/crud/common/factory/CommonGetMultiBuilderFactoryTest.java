@@ -21,8 +21,8 @@ import com.google.common.collect.Lists;
 import jmind.pigg.crud.Builder;
 import jmind.pigg.crud.Order;
 import jmind.pigg.crud.common.factory.CommonGetMultiBuilderFactory;
-import jmind.pigg.util.reflect.DynamicTokens;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.DynamicTokens;
+import jmind.base.util.reflect.TypeToken;
 
 import org.junit.Test;
 

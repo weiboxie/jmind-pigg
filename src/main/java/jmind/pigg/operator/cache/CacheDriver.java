@@ -18,6 +18,8 @@ package jmind.pigg.operator.cache;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.Iterables;
+import jmind.base.util.reflect.TypeWrapper;
 import jmind.pigg.annotation.Cache;
 import jmind.pigg.annotation.CacheBy;
 import jmind.pigg.annotation.CacheIgnored;
@@ -32,10 +34,8 @@ import jmind.pigg.parser.ASTJDBCIterableParameter;
 import jmind.pigg.parser.ASTJDBCParameter;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.stat.InvocationStat;
-import jmind.pigg.util.Iterables;
 import jmind.pigg.util.Strings;
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TypeWrapper;
+
 
 import java.lang.reflect.Type;
 import java.util.*;

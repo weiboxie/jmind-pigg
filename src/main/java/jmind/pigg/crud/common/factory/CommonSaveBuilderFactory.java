@@ -36,7 +36,7 @@ public class CommonSaveBuilderFactory extends AbstractCommonBuilderFactory {
 
     @Override
     Type expectedReturnType(Class<?> entityClass) {
-        return void.class;
+        return int.class;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CommonSaveBuilderFactory extends AbstractCommonBuilderFactory {
 
     @Override
     Builder createCommonBuilder(CrudMeta cm) {
-        return new CommonSaveBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns(), cm.isAutoGenerateId());
+        return new CommonSaveBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns(), false);
     }
 
 }

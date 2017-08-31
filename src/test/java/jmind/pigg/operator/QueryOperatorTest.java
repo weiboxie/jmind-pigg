@@ -38,7 +38,7 @@ import jmind.pigg.support.JdbcOperationsAdapter;
 import jmind.pigg.support.MockDB;
 import jmind.pigg.support.MockSQL;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
@@ -59,20 +59,7 @@ public class QueryOperatorTest {
     String srcSql = "select * from user where id=:1.id and name=:1.name";
     AbstractOperator operator = getOperator(t, t, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> T queryForObject(DataSource ds, BoundSql boundSql, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id=? and name=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) "ash"));
-        assertThat(rowMapper.getMappedClass().equals(User.class), is(true));
-        return null;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -88,21 +75,7 @@ public class QueryOperatorTest {
     String srcSql = "select * from user where id=:1.id and name=:1.name";
     AbstractOperator operator = getOperator(pt, rt, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> List<T> queryForList(DataSource ds, BoundSql boundSql,
-                                      ListSupplier listSupplier, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id=? and name=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) "ash"));
-        assertThat(rowMapper.getMappedClass().equals(User.class), is(true));
-        return null;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -118,21 +91,7 @@ public class QueryOperatorTest {
     String srcSql = "select * from user where id=:1.id and name=:1.name";
     AbstractOperator operator = getOperator(pt, rt, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> Set<T> queryForSet(DataSource ds, BoundSql boundSql,
-                                    SetSupplier setSupplier, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id=? and name=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) "ash"));
-        assertThat(rowMapper.getMappedClass().equals(User.class), is(true));
-        return null;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -147,20 +106,6 @@ public class QueryOperatorTest {
     String srcSql = "select * from user where id=:1.id and name=:1.name";
     AbstractOperator operator = getOperator(pt, rt, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> Object queryForArray(DataSource ds, BoundSql boundSql, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id=? and name=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) "ash"));
-        assertThat(rowMapper.getMappedClass().equals(User.class), is(true));
-        return null;
-      }
-    });
 
     User user = new User();
     user.setId(100);
@@ -177,22 +122,7 @@ public class QueryOperatorTest {
     String srcSql = "select * from user where id in (:1)";
     AbstractOperator operator = getOperator(pt, rt, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> List<T> queryForList(DataSource ds, BoundSql boundSql,
-                                      ListSupplier listSupplier, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id in (?,?,?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(3));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) 200));
-        assertThat(args[2], equalTo((Object) 300));
-        assertThat(rowMapper.getMappedClass().equals(User.class), is(true));
-        return null;
-      }
-    });
+
 
     List<Integer> ids = Arrays.asList(100, 200, 300);
     operator.execute(new Object[]{ids}, InvocationStat.create());
@@ -207,22 +137,7 @@ public class QueryOperatorTest {
     String srcSql = "select count(1) from user where id in (:1)";
     AbstractOperator operator = getOperator(pt, rt, srcSql, new ArrayList<Annotation>());
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @SuppressWarnings("unchecked")
-      @Override
-      public <T> T queryForObject(DataSource ds, BoundSql boundSql, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select count(1) from user where id in (?,?,?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(3));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) 200));
-        assertThat(args[2], equalTo((Object) 300));
-        assertThat(rowMapper.getMappedClass().equals(Integer.class), is(true));
-        return (T) Integer.valueOf(3);
-      }
-    });
+
 
     List<Integer> ids = Arrays.asList(100, 200, 300);
     Integer r = (Integer) operator.execute(new Object[]{ids}, InvocationStat.create());
@@ -239,19 +154,13 @@ public class QueryOperatorTest {
     user.setId(100);
     user.setName("ash");
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> T queryForObject(DataSource ds, BoundSql boundSql, RowMapper<T> rowMapper) {
-        return null;
-      }
-    });
+
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{user}, stat);
     assertThat(stat.getDatabaseExecuteSuccessCount(), equalTo(1L));
     operator.execute(new Object[]{user}, stat);
     assertThat(stat.getDatabaseExecuteSuccessCount(), equalTo(2L));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter());
     try {
       operator.execute(new Object[]{user}, stat);
     } catch (UnsupportedOperationException e) {

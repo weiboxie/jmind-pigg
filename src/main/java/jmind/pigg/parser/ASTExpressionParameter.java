@@ -19,12 +19,12 @@ package jmind.pigg.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jmind.base.util.Iterables;
 import jmind.pigg.binding.BindingParameter;
 import jmind.pigg.binding.BindingParameterInvoker;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.parser.generate.Parser;
 import jmind.pigg.parser.generate.ParserVisitor;
-import jmind.pigg.util.Iterables;
 
 
 /**

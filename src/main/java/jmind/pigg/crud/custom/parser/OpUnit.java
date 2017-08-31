@@ -19,6 +19,7 @@ package jmind.pigg.crud.custom.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmind.base.util.DataUtil;
 import jmind.pigg.crud.custom.parser.op.*;
 import jmind.pigg.util.Strings;
 
@@ -53,12 +54,12 @@ public class OpUnit {
     for (Op op : OPS) {
       if (str.endsWith(op.keyword())) {
         this.op = op;
-        this.property = Strings.firstLetterToLowerCase(str.substring(0, str.length() - op.keyword().length()));
+        this.property = DataUtil.firstLetterToLowerCase(str.substring(0, str.length() - op.keyword().length()));
         return;
       }
     }
     this.op = new EqualsOp();
-    this.property = Strings.firstLetterToLowerCase(str);
+    this.property = DataUtil.firstLetterToLowerCase(str);
   }
 
   public static OpUnit create(String str) {

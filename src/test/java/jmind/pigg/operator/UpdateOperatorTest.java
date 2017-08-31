@@ -38,7 +38,7 @@ import jmind.pigg.support.*;
 import jmind.pigg.support.model4table.User;
 import jmind.pigg.type.IntegerTypeHandler;
 import jmind.pigg.type.LongTypeHandler;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
@@ -62,19 +62,6 @@ public class UpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) "ash"));
-        assertThat(args.get(1), equalTo((Object) 100));
-        return 1;
-      }
-    });
 
     User user = new User();
     user.setId(100);
@@ -90,20 +77,6 @@ public class UpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds,  BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) "ash"));
-        assertThat(args.get(1), equalTo((Object) 100));
-        return 1;
-      }
-    });
-
     User user = new User();
     user.setId(100);
     user.setName("ash");
@@ -118,19 +91,7 @@ public class UpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) "ash"));
-        assertThat(args.get(1), equalTo((Object) 100));
-        return 0;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -146,21 +107,7 @@ public class UpdateOperatorTest {
     String srcSql = "insert into user(id, name) values(:1.id, :1.name)";
     AbstractOperator operator = getOperatorReturnGeneratedId(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql, GeneratedKeyHolder holder) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "insert into user(id, name) values(?, ?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) 100));
-        assertThat(args.get(1), equalTo((Object) "ash"));
-        assertThat(holder.getTypeHandler().getClass().equals(IntegerTypeHandler.class), is(true));
-        holder.setKey(100);
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -176,22 +123,7 @@ public class UpdateOperatorTest {
     String srcSql = "insert into user(id, name) values(:1.id, :1.name)";
     AbstractOperator operator = getOperatorReturnGeneratedId(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql, GeneratedKeyHolder holder) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "insert into user(id, name) values(?, ?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) 100));
-        assertThat(args.get(1), equalTo((Object) "ash"));
-        System.out.println(holder.getTypeHandler());
-        assertThat(holder.getTypeHandler().getClass().equals(LongTypeHandler.class), is(true));
-        holder.setKey(100L);
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -207,19 +139,7 @@ public class UpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) "ash"));
-        assertThat(args.get(1), equalTo((Object) 100));
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -230,7 +150,6 @@ public class UpdateOperatorTest {
     operator.execute(new Object[]{user}, stat);
     assertThat(stat.getDatabaseExecuteSuccessCount(), equalTo(2L));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter());
     try {
       operator.execute(new Object[]{user}, stat);
     } catch (UnsupportedOperationException e) {
@@ -257,19 +176,7 @@ public class UpdateOperatorTest {
     String srcSql = "update user set name=:1.name where id=:1.id";
     AbstractOperator operator = getOperator(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) "ash"));
-        assertThat(args.get(1), equalTo((Object) 100));
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -288,21 +195,7 @@ public class UpdateOperatorTest {
     String srcSql = "insert into user(id, name) values(:1.id, :1.name)";
     AbstractOperator operator = getOperatorReturnGeneratedId(pt, rt, srcSql);
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql, GeneratedKeyHolder holder) {
-        String sql = boundSql.getSql();
-        List<Object> args = boundSql.getArgs();
-        String descSql = "insert into user(id, name) values(?, ?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.size(), equalTo(2));
-        assertThat(args.get(0), equalTo((Object) 100));
-        assertThat(args.get(1), equalTo((Object) "ash"));
-        assertThat(holder.getTypeHandler().getClass().equals(IntegerTypeHandler.class), is(true));
-        holder.setKey(100);
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);

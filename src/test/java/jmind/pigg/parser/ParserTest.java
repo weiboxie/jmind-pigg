@@ -27,7 +27,7 @@ import jmind.pigg.parser.generate.Parser;
 import jmind.pigg.support.ParserVisitorAdapter;
 import jmind.pigg.util.jdbc.JdbcType;
 import jmind.pigg.util.jdbc.SQLType;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;

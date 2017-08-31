@@ -60,10 +60,6 @@ public abstract class AbstractOperator implements Operator {
    */
   protected InvocationContextFactory invocationContextFactory;
 
-  /**
-   * jdbc操作
-   */
-  protected JdbcOperations jdbcOperations;
 
   /**
    * pigg全局配置信息
@@ -80,9 +76,7 @@ public abstract class AbstractOperator implements Operator {
     mergeConfig(md);
   }
 
-  public void setJdbcOperations(JdbcOperations jdbcOperations) {
-    this.jdbcOperations = jdbcOperations;
-  }
+
 
   public void setInvocationContextFactory(InvocationContextFactory invocationContextFactory) {
     this.invocationContextFactory = invocationContextFactory;

@@ -16,6 +16,7 @@
 
 package jmind.pigg.interceptor;
 
+import jmind.pigg.binding.InvocationContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,10 +61,11 @@ public class InterceptorSQLTypeTest {
 
     Pigg pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.INSERT));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     UserDao dao = pigg.create(UserDao.class);
@@ -73,9 +75,15 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new QueryInterceptor() {
+
       @Override
-      public void interceptQuery(BoundSql boundSql, List<Parameter> parameters, DataSource dataSource) {
-        t.incrementAndGet();
+      public void interceptQuery(InvocationContext context, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, Object result) {
+
       }
     });
     dao = pigg.create(UserDao.class);
@@ -84,10 +92,10 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.UPDATE));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     dao = pigg.create(UserDao.class);
@@ -98,10 +106,10 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.DELETE));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     dao = pigg.create(UserDao.class);
@@ -110,10 +118,10 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.REPLACE));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     dao = pigg.create(UserDao.class);
@@ -127,10 +135,10 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.MERGE));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     dao = pigg.create(UserDao.class);
@@ -144,10 +152,10 @@ public class InterceptorSQLTypeTest {
 
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
+
       @Override
-      public void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-        t.incrementAndGet();
-        assertThat(sqlType, equalTo(SQLType.TRANCATE));
+      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+
       }
     });
     dao = pigg.create(UserDao.class);

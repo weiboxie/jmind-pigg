@@ -16,10 +16,11 @@
 
 package jmind.pigg.descriptor;
 
+import jmind.base.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeWrapper;
+
 import javax.annotation.Nullable;
 
-import jmind.pigg.util.reflect.TypeToken;
-import jmind.pigg.util.reflect.TypeWrapper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

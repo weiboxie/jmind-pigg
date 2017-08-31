@@ -17,7 +17,7 @@
 package jmind.pigg.crud.custom.parser.op;
 
 
-import jmind.pigg.util.Objects;
+import jmind.base.util.Objects;
 
 /**
  * @author xieweibo

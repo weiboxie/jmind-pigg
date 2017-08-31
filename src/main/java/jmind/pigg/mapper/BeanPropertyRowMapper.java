@@ -16,23 +16,23 @@
 
 package jmind.pigg.mapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import jmind.base.util.DataUtil;
+import jmind.base.util.reflect.ClassUtil;
 import jmind.pigg.invoker.InvokerCache;
 import jmind.pigg.invoker.SetterInvoker;
 import jmind.pigg.invoker.UnreachablePropertyException;
 import jmind.pigg.type.TypeHandler;
 import jmind.pigg.type.TypeHandlerRegistry;
 import jmind.pigg.util.PropertyTokenizer;
-import jmind.pigg.util.Strings;
 import jmind.pigg.util.jdbc.ResultSetWrapper;
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
-import jmind.pigg.util.reflect.Reflection;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 单列或多列组装对象RowMapper
@@ -78,7 +78,7 @@ public class BeanPropertyRowMapper<T> implements RowMapper<T> {
         invokerMap.put(column.toLowerCase(), invoker);
       } else { // 使用约定映射
         invokerMap.put(invoker.getName().toLowerCase(), invoker);
-        String underscoredName = Strings.underscoreName(invoker.getName());
+        String underscoredName = DataUtil.underscoreName(invoker.getName());
         if (!invoker.getName().toLowerCase().equals(underscoredName)) {
           invokerMap.put(underscoredName, invoker);
         }
@@ -87,7 +87,7 @@ public class BeanPropertyRowMapper<T> implements RowMapper<T> {
   }
 
   public T mapRow(ResultSet rs, int rowNumber) throws SQLException {
-    T mappedObject = Reflection.instantiate(mappedClass);
+    T mappedObject = ClassUtil.instantiate(mappedClass);
 
     ResultSetWrapper rsw = new ResultSetWrapper(rs);
     int columnCount = rsw.getColumnCount();

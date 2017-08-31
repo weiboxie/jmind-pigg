@@ -16,39 +16,43 @@
 
 package jmind.pigg.crud.common.factory;
 
+import jmind.base.util.reflect.DynamicTokens;
+import jmind.base.util.reflect.TypeToken;
+import jmind.pigg.crud.Builder;
+import jmind.pigg.crud.CrudMeta;
+import jmind.pigg.crud.common.builder.CommonFindAllBuilder;
+import jmind.pigg.plugin.page.Page;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmind.pigg.crud.Builder;
-import jmind.pigg.crud.CrudMeta;
-import jmind.pigg.crud.common.builder.CommonSaveBuilder;
 
 /**
  * @author xieweibo
  */
-public class CommonSaveAndGeneratedIdBuilderFactory extends AbstractCommonBuilderFactory {
+public class CommonFindPageBuilderFactory extends AbstractCommonBuilderFactory {
 
     @Override
     String expectedMethodName() {
-        return "saveAndGeneratedId";
+        return "findAll";
     }
 
     @Override
     Type expectedReturnType(Class<?> entityClass) {
-        return int.class;
+        return DynamicTokens.listToken(TypeToken.of(entityClass)).getType();
     }
 
     @Override
     List<Type> expectedParameterType(Class<?> entityClass, Class<?> idClass) {
         List<Type> types = new ArrayList<Type>();
-        types.add(entityClass);
+        types.add(Page.class);
         return types;
     }
 
     @Override
     Builder createCommonBuilder(CrudMeta cm) {
-        return new CommonSaveBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns(), false);
+        return new CommonFindAllBuilder(cm.getColumns());
     }
 
 }

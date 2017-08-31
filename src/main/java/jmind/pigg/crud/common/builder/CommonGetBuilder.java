@@ -16,10 +16,11 @@
 
 package jmind.pigg.crud.common.builder;
 
-import java.util.List;
-
+import jmind.base.util.DataUtil;
+import jmind.base.util.GlobalConstants;
 import jmind.pigg.crud.Builder;
-import jmind.pigg.util.Joiner;
+
+import java.util.List;
 
 /**
  * @author xieweibo
@@ -36,7 +37,7 @@ public class CommonGetBuilder implements Builder {
         if (index < 0) {
             throw new IllegalArgumentException("error column id [" + colId + "]");
         }
-        String s1 = Joiner.on(", ").join(cols);
+        String s1 = DataUtil.join(cols, GlobalConstants.COMMA);
         SQL = isBatch ? String.format(BATCH_SQL_TEMPLATE, s1, colId) : String.format(SQL_TEMPLATE, s1, colId);
     }
 

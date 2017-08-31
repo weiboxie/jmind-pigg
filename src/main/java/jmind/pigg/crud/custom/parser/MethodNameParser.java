@@ -18,6 +18,7 @@ package jmind.pigg.crud.custom.parser;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.DataUtil;
 import jmind.pigg.util.Strings;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MethodNameParser {
     int index = 0;
     while (m.find()) {
       opUnits.add(OpUnit.create(str.substring(index, m.start())));
-      logics.add(Strings.firstLetterToLowerCase(m.group()));
+      logics.add(DataUtil.firstLetterToLowerCase(m.group()));
       index = m.end();
     }
     opUnits.add(OpUnit.create(str.substring(index)));
@@ -64,7 +65,7 @@ public class MethodNameParser {
     Pattern p = Pattern.compile(ORDER_BY_REGEX);
     Matcher m = p.matcher(str);
     if (m.find()) {
-      String tailStr = Strings.firstLetterToLowerCase(str.substring(m.end() - 1));
+      String tailStr = DataUtil.firstLetterToLowerCase(str.substring(m.end() - 1));
       int size = ORDER_BY.length() + tailStr.length();
       String property;
       OrderType orderType;

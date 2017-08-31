@@ -45,7 +45,10 @@ public interface InvocationContext {
 
   public void appendToArgs(Object obj, TypeHandler<?> typeHandler);
 
+  public void appendToArgs(Object obj);
   public BoundSql getBoundSql();
+
+  public StringBuilder getSql();
 
   public List<Object> getParameterValues();
 

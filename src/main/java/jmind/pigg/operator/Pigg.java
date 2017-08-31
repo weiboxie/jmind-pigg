@@ -16,8 +16,12 @@
 
 package jmind.pigg.operator;
 
-import javax.sql.DataSource;
-
+import jmind.base.cache.CacheLoader;
+import jmind.base.cache.DoubleCheckCache;
+import jmind.base.cache.LoadingCache;
+import jmind.base.util.ToStringHelper;
+import jmind.base.util.reflect.AbstractInvocationHandler;
+import jmind.base.util.reflect.ClassUtil;
 import jmind.pigg.annotation.Cache;
 import jmind.pigg.annotation.DB;
 import jmind.pigg.datasource.DataSourceFactory;
@@ -30,22 +34,14 @@ import jmind.pigg.interceptor.Interceptor;
 import jmind.pigg.interceptor.InterceptorChain;
 import jmind.pigg.operator.cache.CacheHandler;
 import jmind.pigg.stat.*;
-import jmind.pigg.util.ToStringHelper;
-import jmind.pigg.util.local.CacheLoader;
-import jmind.pigg.util.local.DoubleCheckCache;
-import jmind.pigg.util.local.LoadingCache;
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
-import jmind.pigg.util.reflect.AbstractInvocationHandler;
-import jmind.pigg.util.reflect.Reflection;
 
+import javax.sql.DataSource;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * pigg框架DAO工厂
@@ -66,15 +62,12 @@ public class Pigg extends Config {
    */
   private CacheHandler cacheHandler;
 
-  /**
-   * 是否懒加载
-   */
-  private boolean isLazyInit = false;
+
 
   /**
    * 拦截器链，默认为空
    */
-  private InterceptorChain interceptorChain = new InterceptorChain();
+  private InterceptorChain interceptorChain ;
 
   /**
    * 统计收集器
@@ -106,9 +99,7 @@ public class Pigg extends Config {
     return pigg;
   }
 
-  public static Pigg newInstance(DataSourceFactory... dataSourceFactories) {
-    return newInstance(Arrays.asList(dataSourceFactories));
-  }
+
 
   public static Pigg newInstance(List<DataSourceFactory> dataSourceFactories) {
     Pigg pigg = newInstance();
@@ -116,19 +107,7 @@ public class Pigg extends Config {
     return pigg;
   }
 
-  public static Pigg newInstance(DataSourceFactory dataSourceFactory, CacheHandler cacheHandler) {
-    Pigg pigg = newInstance();
-    pigg.setDataSourceFactory(dataSourceFactory);
-    pigg.setCacheHandler(cacheHandler);
-    return pigg;
-  }
 
-  public static Pigg newInstance(List<DataSourceFactory> dataSourceFactories, CacheHandler cacheHandler) {
-    Pigg pigg = newInstance();
-    pigg.setDataSourceFactories(dataSourceFactories);
-    pigg.setCacheHandler(cacheHandler);
-    return pigg;
-  }
 
   /**
    * 获得pigg实例
@@ -148,6 +127,7 @@ public class Pigg extends Config {
       interceptorChain = new InterceptorChain();
     }
     interceptorChain.addInterceptor(interceptor);
+
   }
 
   /**
@@ -180,7 +160,7 @@ public class Pigg extends Config {
 
     piggInvocationHandler handler = new piggInvocationHandler(
         daoClass, dataSourceFactoryGroup, cacheHandler, interceptorChain, statCollector, this);
-    if (!isLazyInit) { // 不使用懒加载，则提前加载
+    if (!isLazyInit()) { // 不使用懒加载，则提前加载
       List<Method> methods = Methods.listMethods(daoClass);
       for (Method method : methods) {
         try {
@@ -190,7 +170,8 @@ public class Pigg extends Config {
         }
       }
     }
-    return Reflection.newProxy(daoClass, handler);
+
+    return ClassUtil.newProxy(daoClass, handler);
   }
 
   /**
@@ -249,13 +230,7 @@ public class Pigg extends Config {
     this.cacheHandler = cacheHandler;
   }
 
-  public boolean isLazyInit() {
-    return isLazyInit;
-  }
 
-  public void setLazyInit(boolean isLazyInit) {
-    this.isLazyInit = isLazyInit;
-  }
 
   public void setInterceptorChain(InterceptorChain interceptorChain) {
     if (interceptorChain == null) {

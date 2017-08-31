@@ -18,15 +18,16 @@ package jmind.pigg.jdbc;
 
 import javax.sql.DataSource;
 
+import jmind.base.cache.CacheLoader;
+import jmind.base.cache.DoubleCheckCache;
+import jmind.base.cache.LoadingCache;
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.jdbc.exception.DataAccessException;
 import jmind.pigg.jdbc.exception.DataRetrievalFailureException;
 import jmind.pigg.mapper.RowMapper;
 import jmind.pigg.transaction.DataSourceUtils;
 import jmind.pigg.type.TypeHandler;
-import jmind.pigg.util.local.CacheLoader;
-import jmind.pigg.util.local.DoubleCheckCache;
-import jmind.pigg.util.local.LoadingCache;
+
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
 

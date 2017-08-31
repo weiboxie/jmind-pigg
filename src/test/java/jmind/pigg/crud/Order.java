@@ -17,7 +17,7 @@
 package jmind.pigg.crud;
 
 import jmind.pigg.annotation.Column;
-import jmind.pigg.annotation.ID;
+import jmind.pigg.annotation.Id;
 import jmind.pigg.annotation.Ignore;
 
 /**
@@ -25,7 +25,7 @@ import jmind.pigg.annotation.Ignore;
  */
 public class Order {
 
-  @ID
+  @Id
   private int id;
 
   @Column("userid")

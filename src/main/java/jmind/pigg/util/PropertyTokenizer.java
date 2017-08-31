@@ -15,6 +15,8 @@
  */
 package jmind.pigg.util;
 
+import jmind.base.util.DataUtil;
+
 import javax.annotation.Nullable;
 
 /**
@@ -32,7 +34,7 @@ public class PropertyTokenizer {
         name = fullname.substring(0, delim);
         children = fullname.substring(delim + 1);
       } else {
-        name = Strings.emptyToNull(fullname);
+        name = DataUtil.emptyToNull(fullname);
         children = null;
       }
     }

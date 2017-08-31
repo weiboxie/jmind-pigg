@@ -20,11 +20,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
+import jmind.base.util.reflect.ClassUtil;
+import jmind.base.util.reflect.TokenTuple;
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.annotation.Getter;
 import jmind.pigg.exception.UncheckedException;
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TokenTuple;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 /**
  * 函数式getter方法调用器
@@ -44,7 +45,7 @@ public class FunctionalGetterInvoker extends MethodNamedObject implements Getter
     TypeToken<?> returnToken = TypeToken.of(method.getGenericReturnType());
     if (getterAnno != null) { // 启用函数式调用功能
       Class<? extends GetterFunction<?, ?>> funcClass = getterAnno.value();
-      function = Reflection.instantiateClass(funcClass);
+      function = ClassUtil.instantiateClass(funcClass);
 
       TokenTuple tokenTuple = TypeToken.of(funcClass).resolveFatherClassTuple(GetterFunction.class);
       TypeToken<?> inputToken = tokenTuple.getFirst();

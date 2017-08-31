@@ -18,11 +18,12 @@ package jmind.pigg.invoker.function.enums;
 
 import javax.annotation.Nullable;
 
+import jmind.base.cache.CacheLoader;
+import jmind.base.cache.DoubleCheckCache;
+import jmind.base.cache.LoadingCache;
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.invoker.RuntimeSetterFunction;
-import jmind.pigg.util.local.CacheLoader;
-import jmind.pigg.util.local.DoubleCheckCache;
-import jmind.pigg.util.local.LoadingCache;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 import java.lang.reflect.Type;
 import java.util.EnumSet;

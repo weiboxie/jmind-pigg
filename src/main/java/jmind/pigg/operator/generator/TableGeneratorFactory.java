@@ -18,6 +18,9 @@ package jmind.pigg.operator.generator;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.reflect.ClassUtil;
+import jmind.base.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeWrapper;
 import jmind.pigg.annotation.Sharding;
 import jmind.pigg.annotation.ShardingBy;
 import jmind.pigg.annotation.TableShardingBy;
@@ -30,9 +33,7 @@ import jmind.pigg.exception.IncorrectParameterTypeException;
 import jmind.pigg.sharding.NotUseShardingStrategy;
 import jmind.pigg.sharding.NotUseTableShardingStrategy;
 import jmind.pigg.sharding.TableShardingStrategy;
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TypeToken;
-import jmind.pigg.util.reflect.TypeWrapper;
+
 
 import java.lang.reflect.Type;
 
@@ -125,12 +126,12 @@ public class TableGeneratorFactory {
     }
     Class<? extends TableShardingStrategy> strategyClass = shardingAnno.tableShardingStrategy();
     if (!strategyClass.equals(NotUseTableShardingStrategy.class)) {
-      TableShardingStrategy strategy = Reflection.instantiateClass(strategyClass);
+      TableShardingStrategy strategy = ClassUtil.instantiateClass(strategyClass);
       return strategy;
     }
     strategyClass = shardingAnno.shardingStrategy();
     if (!strategyClass.equals(NotUseShardingStrategy.class)) {
-      TableShardingStrategy strategy = Reflection.instantiateClass(strategyClass);
+      TableShardingStrategy strategy = ClassUtil.instantiateClass(strategyClass);
       return strategy;
     }
     return null;

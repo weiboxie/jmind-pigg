@@ -16,11 +16,13 @@
 
 package jmind.pigg.crud;
 
-import java.util.Collection;
-import java.util.List;
-
+import jmind.pigg.annotation.GeneratedId;
 import jmind.pigg.annotation.UseSqlGenerator;
 import jmind.pigg.descriptor.Generic;
+import jmind.pigg.plugin.page.Page;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author xieweibo
@@ -28,15 +30,16 @@ import jmind.pigg.descriptor.Generic;
 @UseSqlGenerator(CrudSqlGenerator.class)
 public interface CrudRepository<T, ID> extends Generic<T, ID> {
     T findOne(ID id);
-
+    List<T> findAll();
     List<T> findAll(Collection<ID> ids);
 
-    List<T> findAll();
 
+    List<T> findAll(Page page);
     long count();
 
-  void save(T entity);
+  int save(T entity);
 
+  @GeneratedId
   int saveAndGeneratedId(T entity);
 
   void save(Collection<T> entities);
@@ -44,7 +47,7 @@ public interface CrudRepository<T, ID> extends Generic<T, ID> {
 
   // update 和set 区别 。update 修改所有字段 ，set 修改非 null 属性字段
   int update(T entity);
-
+  int update(T entity,T wheres);
   int[] update(Collection<T> entities);
 
   
@@ -53,5 +56,7 @@ public interface CrudRepository<T, ID> extends Generic<T, ID> {
   int[] set(Collection<T> entities);
   
   int delete(ID id);
+  // 目前此接口只支持mysql
+  int replace(T entity);
 
 }

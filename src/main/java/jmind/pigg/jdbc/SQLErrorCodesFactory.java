@@ -18,10 +18,10 @@ package jmind.pigg.jdbc;
 
 import javax.sql.DataSource;
 
+import jmind.base.util.PatternMatchUtils;
 import jmind.pigg.jdbc.exception.MetaDataAccessException;
 import jmind.pigg.transaction.DataSourceUtils;
 import jmind.pigg.transaction.exception.CannotGetJdbcConnectionException;
-import jmind.pigg.util.PatternMatchUtils;
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
 

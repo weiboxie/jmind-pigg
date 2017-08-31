@@ -16,13 +16,13 @@
 
 package jmind.pigg.plugin.page;
 
-import javax.sql.DataSource;
-
 import jmind.pigg.binding.BoundSql;
-import jmind.pigg.interceptor.Parameter;
+import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.interceptor.QueryInterceptor;
+import jmind.pigg.jdbc.JdbcOperationsFactory;
 import jmind.pigg.mapper.SingleColumnRowMapper;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -30,40 +30,52 @@ import java.util.List;
  */
 public abstract class AbstractPageInterceptor extends QueryInterceptor {
 
-  @Override
-  public void interceptQuery(BoundSql boundSql, List<Parameter> parameters, DataSource dataSource) {
-    for (Parameter parameter : parameters) {
-      Object val = parameter.getValue();
-      if (val instanceof Page) {
-        Page page = (Page) val;
+    @Override
+    public void interceptQuery(InvocationContext context, DataSource dataSource) {
+        List<Object> values = context.getParameterValues();
+        for(int i=values.size()-1;i>=0;i--){ // 一般把最后一个参数放Page，倒叙循环，提高性能
+            if(values.get(i) instanceof Page){
+                Page page = (Page) values.get(i);
+                // 参数检测
+                int pageNum = page.getPage();
+                int pageSize = page.getPageSize();
+                if (pageNum <= 0) {
+                    throw new PageException("pageNum need > 0, but pageNum is " + pageNum);
+                }
+                if (pageSize <= 0) {
+                    throw new PageException("pageSize need > 0, but pageSize is " + pageSize);
+                }
 
-        // 参数检测
-        int pageNum = page.getPageNum();
-        int pageSize = page.getPageSize();
-        if (pageNum <= 0) {
-          throw new PageException("pageNum need > 0, but pageNum is " + pageNum);
-        }
-        if (pageSize <= 0) {
-          throw new PageException("pageSize need > 0, but pageSize is " + pageSize);
+                // 获取总数
+                if (page.isFetchTotal()) {
+                    BoundSql totalBoundSql = context.getBoundSql();
+                    handleTotal(totalBoundSql);
+                    SingleColumnRowMapper<Long> mapper = new SingleColumnRowMapper<Long>(long.class);
+                    long total = JdbcOperationsFactory.getJdbcOperations().queryForObject(dataSource, totalBoundSql, mapper);
+                    page.setTotal(total);
+                }
+
+                // 分页处理
+                handlePage(page, context);
+                return;
+            }
         }
 
-        // 获取总数
-        if (page.isFetchTotal()) {
-          BoundSql totalBoundSql = boundSql.copy();
-          handleTotal(totalBoundSql);
-          SingleColumnRowMapper<Integer> mapper = new SingleColumnRowMapper<Integer>(int.class);
-          int total = getJdbcOperations().queryForObject(dataSource, totalBoundSql, mapper);
-          page.setTotal(total);
-        }
-
-        // 分页处理
-        handlePage(page, boundSql);
-      }
     }
-  }
 
-  abstract void handleTotal(BoundSql boundSql);
+    public  void interceptResult(InvocationContext context, Object result){
+        List<Object> values = context.getParameterValues();
+        for(int i=values.size()-1;i>=0;i--){
+             if(values.get(i) instanceof Page){
+                 Page page = (Page) values.get(i);
+                 page.setResult(result);
+                    return;
+             }
+         }
+    }
 
-  abstract void handlePage(Page page, BoundSql boundSql);
+    abstract void handleTotal(BoundSql boundSql);
+
+    abstract void handlePage(Page page, InvocationContext context);
 
 }

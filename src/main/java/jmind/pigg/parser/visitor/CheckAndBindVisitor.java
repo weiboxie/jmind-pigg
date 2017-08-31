@@ -18,6 +18,7 @@ package jmind.pigg.parser.visitor;
 
 import java.lang.reflect.Type;
 
+import jmind.base.util.reflect.TypeWrapper;
 import jmind.pigg.binding.BindingParameter;
 import jmind.pigg.binding.BindingParameterInvoker;
 import jmind.pigg.binding.ParameterContext;
@@ -27,7 +28,6 @@ import jmind.pigg.parser.generate.ParserVisitor;
 import jmind.pigg.parser.generate.SimpleNode;
 import jmind.pigg.type.TypeHandler;
 import jmind.pigg.type.TypeHandlerRegistry;
-import jmind.pigg.util.reflect.TypeWrapper;
 
 /**
  * 类型检测

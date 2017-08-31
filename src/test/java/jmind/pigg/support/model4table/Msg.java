@@ -18,8 +18,7 @@ package jmind.pigg.support.model4table;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-
-import jmind.pigg.annotation.ID;
+import jmind.pigg.annotation.Id;
 import jmind.pigg.support.Randoms;
 
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ import java.util.List;
  */
 public class Msg {
 
-  @ID
-  private int id; // 自增id
+  @Id
+  private Integer id; // 自增id
   private int uid;
   private String content;
   private String userName;
@@ -72,13 +71,7 @@ public class Msg {
     return msg;
   }
 
-  public int getId() {
-    return id;
-  }
 
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public int getUid() {
     return uid;
@@ -113,9 +106,11 @@ public void setPid(int pid) {
 }
 
 
-  
+  public Integer getId() {
+    return id;
+  }
 
-  
-  
-  
+  public void setId(Integer id) {
+    this.id = id;
+  }
 }

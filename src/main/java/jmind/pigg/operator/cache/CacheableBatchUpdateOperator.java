@@ -18,13 +18,14 @@ package jmind.pigg.operator.cache;
 
 import javax.sql.DataSource;
 
+import jmind.base.util.Iterables;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.operator.BatchUpdateOperator;
 import jmind.pigg.operator.Config;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.stat.InvocationStat;
-import jmind.pigg.util.Iterables;
+
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
 

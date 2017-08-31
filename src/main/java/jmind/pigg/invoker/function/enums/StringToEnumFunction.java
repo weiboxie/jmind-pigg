@@ -18,8 +18,9 @@ package jmind.pigg.invoker.function.enums;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.invoker.RuntimeSetterFunction;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 import java.lang.reflect.Type;
 

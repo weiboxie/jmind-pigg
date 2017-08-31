@@ -51,7 +51,7 @@ import jmind.pigg.support.MockCacheBy;
 import jmind.pigg.support.MockDB;
 import jmind.pigg.support.MockSQL;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 /**
  * @author xieweibo
@@ -74,19 +74,7 @@ public class CacheableBatchUpdateOperatorTest {
       }
     }, new MockCacheBy("id"));
     final int[] expectedInts = new int[]{1, 2};
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int[] batchUpdate(DataSource ds, List<BoundSql> boundSqls) throws DataAccessException {
-        String descSql = "update user set name=? where id=?";
-        assertThat(boundSqls.get(0).getSql(), equalTo(descSql));
-        assertThat(boundSqls.size(), equalTo(2));
-        assertThat(boundSqls.get(0).getArgs().get(0), equalTo((Object) "ash"));
-        assertThat(boundSqls.get(0).getArgs().get(1), equalTo((Object) 100));
-        assertThat(boundSqls.get(1).getArgs().get(0), equalTo((Object) "lucy"));
-        assertThat(boundSqls.get(1).getArgs().get(1), equalTo((Object) 200));
-        return expectedInts;
-      }
-    });
+
     List<User> users = Arrays.asList(new User(100, "ash"), new User(200, "lucy"));
     InvocationStat stat = InvocationStat.create();
     int[] actualInts = (int[]) operator.execute(new Object[]{users}, stat);

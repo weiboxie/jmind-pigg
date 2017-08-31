@@ -18,17 +18,18 @@ package jmind.pigg.operator;
 
 import javax.sql.DataSource;
 
+import jmind.base.util.ToStringHelper;
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.exception.DescriptionException;
 import jmind.pigg.jdbc.GeneratedKeyHolder;
+import jmind.pigg.jdbc.JdbcOperationsFactory;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.parser.EmptyObjectException;
 import jmind.pigg.stat.InvocationStat;
 import jmind.pigg.type.TypeHandler;
 import jmind.pigg.type.TypeHandlerRegistry;
-import jmind.pigg.util.ToStringHelper;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.LinkedHashMap;
@@ -93,10 +94,11 @@ public class UpdateOperator extends AbstractOperator {
       }
     }
 
-    BoundSql boundSql = context.getBoundSql();
+
     DataSource ds = dataSourceGenerator.getDataSource(context, daoClass);
-    invocationInterceptorChain.intercept(boundSql, context, ds);  // 拦截器
-    Number r = executeDb(ds, boundSql, stat);
+    invocationInterceptorChain.preIntercept(context, ds);  // 拦截器
+    Number r = executeDb(ds, context.getBoundSql(), stat);
+    invocationInterceptorChain.postIntercept(context, r);  // 拦截器
     return transformer.transform(r);
   }
 
@@ -106,10 +108,10 @@ public class UpdateOperator extends AbstractOperator {
     try {
       if (returnGeneratedId) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder(generatedKeyTypeHandler);
-        jdbcOperations.update(ds, boundSql, holder);
+        JdbcOperationsFactory.getJdbcOperations().update(ds, boundSql, holder);
         r = holder.getKey();
       } else {
-        r = jdbcOperations.update(ds, boundSql);
+        r = JdbcOperationsFactory.getJdbcOperations().update(ds, boundSql);
       }
     } finally {
       long cost = System.nanoTime() - now;

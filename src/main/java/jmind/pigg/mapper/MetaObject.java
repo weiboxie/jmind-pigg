@@ -15,11 +15,12 @@
  */
 package jmind.pigg.mapper;
 
+import jmind.base.util.reflect.ClassUtil;
 import jmind.pigg.invoker.GetterInvoker;
 import jmind.pigg.invoker.InvokerCache;
 import jmind.pigg.invoker.SetterInvoker;
 import jmind.pigg.util.PropertyTokenizer;
-import jmind.pigg.util.reflect.Reflection;
+
 
 /**
  * @author Clinton Begin
@@ -64,7 +65,7 @@ public class MetaObject {
         } else {
           SetterInvoker invoker = InvokerCache.getSetterInvoker(originalClass, prop.getName());
           Class<?> clazz = invoker.getParameterRawType();
-          Object newObject = Reflection.instantiate(clazz);
+          Object newObject = ClassUtil.instantiate(clazz);
           metaValue = MetaObject.forObject(newObject);
           invoker.invoke(originalObject, newObject);
         }

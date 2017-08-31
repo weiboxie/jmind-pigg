@@ -20,7 +20,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import jmind.pigg.annotation.Column;
-import jmind.pigg.annotation.ID;
+import jmind.pigg.annotation.Id;
 import jmind.pigg.annotation.Ignore;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -30,7 +30,7 @@ import org.apache.commons.lang.RandomStringUtils;
  */
 public class CrudOrder {
 
-  @ID(autoGenerateId = false)
+  @Id(autoGenerateId = false)
   private String id;
 
   @Column("uid")

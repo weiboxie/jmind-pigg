@@ -18,12 +18,13 @@ package jmind.pigg.invoker;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.reflect.ClassUtil;
+import jmind.base.util.reflect.TokenTuple;
+import jmind.base.util.reflect.TypeToken;
+import jmind.base.util.reflect.Types;
 import jmind.pigg.annotation.Setter;
 import jmind.pigg.exception.UncheckedException;
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TokenTuple;
-import jmind.pigg.util.reflect.TypeToken;
-import jmind.pigg.util.reflect.Types;
+
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,9 +53,9 @@ public class FunctionalSetterInvoker extends MethodNamedObject implements Setter
     if (setterAnno != null) { // 启用函数式调用功能
       Class<? extends DummySetterFunction<?, ?>> funcClass = setterAnno.value();
       if (SetterFunction.class.isAssignableFrom(funcClass)) {
-        functionAdapter = new SetterFunctionAdapter((SetterFunction) Reflection.instantiateClass(funcClass));
+        functionAdapter = new SetterFunctionAdapter((SetterFunction) ClassUtil.instantiateClass(funcClass));
       } else if (RuntimeSetterFunction.class.isAssignableFrom(funcClass)) {
-        functionAdapter = new RuntimeSetterFunctionAdapter((RuntimeSetterFunction) Reflection.instantiateClass(funcClass));
+        functionAdapter = new RuntimeSetterFunctionAdapter((RuntimeSetterFunction) ClassUtil.instantiateClass(funcClass));
       } else {
         throw new IllegalArgumentException("error func class '" + funcClass + "'");
       }

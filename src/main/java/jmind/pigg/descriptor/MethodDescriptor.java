@@ -23,6 +23,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.DataUtil;
+import jmind.base.util.reflect.ClassUtil;
 import jmind.pigg.annotation.Cache;
 import jmind.pigg.annotation.CacheIgnored;
 import jmind.pigg.annotation.DB;
@@ -34,7 +36,7 @@ import jmind.pigg.exception.DescriptionException;
 import jmind.pigg.util.Strings;
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
-import jmind.pigg.util.reflect.Reflection;
+
 
 /**
  * 方法描述
@@ -118,10 +120,10 @@ public class MethodDescriptor {
                 throw new DescriptionException(
                         "each method expected one of @SQL or @UseSqlGenerator annotation but not found");
             }
-            SqlGenerator sqlGenerator = Reflection.instantiateClass(useSqlGeneratorAnno.value());
+            SqlGenerator sqlGenerator = ClassUtil.instantiateClass(useSqlGeneratorAnno.value());
             sql = sqlGenerator.generateSql(this);
         }
-        if (Strings.isEmpty(sql)) {
+        if (DataUtil.isEmpty(sql)) {
             throw new DescriptionException("sql is null or empty");
         }
         if (logger.isDebugEnabled()) {
@@ -137,7 +139,7 @@ public class MethodDescriptor {
             throw new DescriptionException("dao interface expected one @DB " + "annotation but not found");
         }
         String table = null;
-        if (Strings.isNotEmpty(dbAnno.table())) {
+        if (DataUtil.isNotEmpty(dbAnno.table())) {
             table = dbAnno.table();
         }
         return table;
@@ -163,8 +165,8 @@ public class MethodDescriptor {
     }
 
     public boolean isReturnGeneratedId() {
-        return isAnnotationPresent(GeneratedId.class)
-                || (name != null && name.contains(GeneratedId.class.getSimpleName()));
+        return isAnnotationPresent(GeneratedId.class);
+            //    || (name != null && name.contains(GeneratedId.class.getSimpleName()));
     }
 
 }

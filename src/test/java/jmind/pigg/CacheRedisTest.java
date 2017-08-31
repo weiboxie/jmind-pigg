@@ -55,7 +55,7 @@ import jmind.pigg.support.Randoms;
 import jmind.pigg.support.Table;
 import jmind.pigg.support.model4table.Msg;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 /**
  * 测试cache

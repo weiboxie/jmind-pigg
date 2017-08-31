@@ -16,15 +16,17 @@
 
 package jmind.pigg.crud;
 
-import javax.annotation.Nullable;
-
+import jmind.base.util.DataUtil;
+import jmind.base.util.bean.BeanUtil;
+import jmind.base.util.bean.PropertyMeta;
 import jmind.pigg.annotation.Column;
-import jmind.pigg.annotation.ID;
+import jmind.pigg.annotation.Id;
 import jmind.pigg.annotation.Ignore;
+import jmind.pigg.operator.Pigg;
 import jmind.pigg.util.Strings;
-import jmind.pigg.util.bean.BeanUtil;
-import jmind.pigg.util.bean.PropertyMeta;
 
+
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -62,15 +64,18 @@ public class CrudMeta {
       }
       String prop = propertyMeta.getName();
       Column colAnno = propertyMeta.getPropertyAnno(Column.class);
-      String col = colAnno != null ?
-          colAnno.value() :
-          Strings.underscoreName(prop);
+      String col = prop;
+      if(colAnno!=null){
+        col=colAnno.value();
+      }else if(Pigg.getInstance().isUnderscoreName()){
+         col=DataUtil.underscoreName(prop);
+      }
       props.add(prop);
       cols.add(col);
       propToColMap.put(prop, col);
       propToTypeMap.put(prop, propertyMeta.getType());
 
-      ID idAnno = propertyMeta.getPropertyAnno(ID.class);
+      Id idAnno = propertyMeta.getPropertyAnno(Id.class);
       if (idAnno != null) {
         if (propId != null || colId != null) {
           throw new IllegalStateException("duplicate ID annotation");

@@ -22,13 +22,10 @@ import org.junit.Test;
 import jmind.pigg.annotation.*;
 import jmind.pigg.datasource.SimpleDataSourceFactory;
 import jmind.pigg.operator.Pigg;
-import jmind.pigg.sharding.DatabaseShardingStrategy;
-import jmind.pigg.sharding.ShardingStrategy;
-import jmind.pigg.sharding.TableShardingStrategy;
 import jmind.pigg.support.DataSourceConfig;
 import jmind.pigg.support.Table;
 import jmind.pigg.support.model4table.Bill;
-import jmind.pigg.util.HashUtil;
+import jmind.base.algo.HashUtil;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

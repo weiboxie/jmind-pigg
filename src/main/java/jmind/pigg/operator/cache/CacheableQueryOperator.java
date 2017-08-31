@@ -18,6 +18,9 @@ package jmind.pigg.operator.cache;
 
 import java.util.*;
 
+import jmind.base.util.CollectionUtil;
+import jmind.base.util.DataUtil;
+import jmind.base.util.Iterables;
 import jmind.pigg.binding.BindingException;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.descriptor.MethodDescriptor;
@@ -29,8 +32,7 @@ import jmind.pigg.operator.QueryOperator;
 import jmind.pigg.parser.ASTJDBCIterableParameter;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.stat.InvocationStat;
-import jmind.pigg.util.Iterables;
-import jmind.pigg.util.Strings;
+
 import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
 
@@ -60,7 +62,7 @@ public class CacheableQueryOperator extends QueryOperator {
       String propertyOfMapper = driver.getPropertyOfMapper().toLowerCase(); //可能有下划线
       List<GetterInvoker> invokers = InvokerCache.getGetterInvokers(returnDescriptor.getMappedClass());
       for (GetterInvoker invoker : invokers) {
-        if (Strings.underscoreName(invoker.getName()).equals(propertyOfMapper)) {
+        if (DataUtil.underscoreName(invoker.getName()).equals(propertyOfMapper)) {
           propertyOfMapperInvoker = invoker;
         }
       }
@@ -272,7 +274,7 @@ public class CacheableQueryOperator extends QueryOperator {
 
       } else if (returnDescriptor.isArray()) {
 
-        return jmind.pigg.util.Arrays.toArray(hitValueList, valueClass);
+        return CollectionUtil.toArray(hitValueList, valueClass);
 
       } else {
         return !hitValueList.isEmpty() ? hitValueList.get(0) : null;

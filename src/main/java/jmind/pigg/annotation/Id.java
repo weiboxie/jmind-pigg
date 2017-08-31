@@ -14,21 +14,20 @@
  * under the License.
  */
 
-package jmind.pigg.util;
+package jmind.pigg.annotation;
 
-import javax.annotation.Nullable;
+import java.lang.annotation.*;
 
 /**
+ * 指定CRUD中的主键ID
+ *
  * @author xieweibo
  */
-public class Objects {
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Id {
 
-  public static boolean equal(@Nullable Object a, @Nullable Object b) {
-    return a == b || (a != null && a.equals(b));
-  }
-
-  public static int hashCode(@Nullable Object... objects) {
-    return java.util.Arrays.hashCode(objects);
-  }
+  boolean autoGenerateId() default true;
 
 }

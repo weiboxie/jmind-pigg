@@ -19,22 +19,33 @@ package jmind.pigg.interceptor;
 import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
+import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.List;
 
 /**
+ * 读拦截器
  * @author xieweibo
  */
-public abstract class QueryInterceptor extends OperableInterceptor {
+public abstract class QueryInterceptor implements Interceptor {
+
+
+  public abstract void interceptQuery(InvocationContext context, DataSource dataSource);
+
+  public abstract void interceptResult(InvocationContext context, Object result);
 
   @Override
-  public void intercept(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-    if (!sqlType.needChangeData()) {
-      interceptQuery(boundSql, parameters, dataSource);
-    }
+  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+    if(!sqlType.needChangeData())
+        interceptQuery(context, dataSource);
   }
 
-  public abstract void interceptQuery(BoundSql boundSql, List<Parameter> parameters, DataSource dataSource);
+  @Override
+  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+    if(!sqlType.needChangeData())
+        interceptResult(context, result);
+  }
+
 
 }

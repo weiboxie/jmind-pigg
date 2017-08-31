@@ -16,6 +16,9 @@
 
 package jmind.pigg.descriptor;
 
+import jmind.base.util.reflect.ClassUtil;
+import jmind.base.util.reflect.TypeToken;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -23,8 +26,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import jmind.pigg.util.reflect.Reflection;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 /**
  * @author xieweibo
@@ -38,7 +40,7 @@ public class Methods {
     for (Annotation a : method.getAnnotations()) {
       mas.add(a);
     }
-    for (Annotation a : Reflection.getAnnotations(daoClass)) {
+    for (Annotation a : ClassUtil.getAnnotations(daoClass)) {
       mas.add(a);
     }
 

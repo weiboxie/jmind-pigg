@@ -20,11 +20,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmind.base.util.reflect.DynamicTokens;
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.crud.Builder;
 import jmind.pigg.crud.CrudMeta;
 import jmind.pigg.crud.common.builder.CommonSetBuilder;
-import jmind.pigg.util.reflect.DynamicTokens;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 /**
  * @author xieweibo

@@ -33,7 +33,8 @@ public class CustomQueryBuilderFactory extends AbstractCustomBuilderFactory {
     PREFIXS.add("getBy");
     PREFIXS.add("findBy");
     PREFIXS.add("queryBy");
-    PREFIXS.add("selectBy");
+    // jpa 官方没有selectBy ，所以我也先不支持
+ //   PREFIXS.add("selectBy");
   }
 
   @Override

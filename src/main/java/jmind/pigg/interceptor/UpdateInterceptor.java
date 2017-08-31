@@ -19,6 +19,7 @@ package jmind.pigg.interceptor;
 import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
+import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.List;
@@ -26,15 +27,20 @@ import java.util.List;
 /**
  * @author xieweibo
  */
-public abstract class UpdateInterceptor extends OperableInterceptor {
+public abstract class UpdateInterceptor  implements Interceptor {
+
+
+
+  public abstract void interceptUpdate(InvocationContext context, DataSource dataSource);
 
   @Override
-  public void intercept(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-    if (sqlType.needChangeData()) {
-      interceptUpdate(boundSql, parameters, sqlType, dataSource);
-    }
+  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+        if(sqlType.needChangeData())
+            interceptUpdate(context,dataSource);
   }
 
-  public abstract void interceptUpdate(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource);
-
+  @Override
+  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+       // do nothing
+  }
 }

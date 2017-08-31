@@ -57,7 +57,7 @@ import jmind.pigg.support.MockCacheBy;
 import jmind.pigg.support.MockDB;
 import jmind.pigg.support.MockSQL;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 /**
  * @author xieweibo
@@ -79,7 +79,7 @@ public class CacheableQueryOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter());
+
 
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{1}, stat);
@@ -106,19 +106,7 @@ public class CacheableQueryOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
 
-      @Override
-      public <T> T queryForObject(DataSource ds, BoundSql boundSql, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id=?";
-        assertThat(sql, Matchers.equalTo(descSql));
-        assertThat(args.length, Matchers.equalTo(1));
-        assertThat(args[0], Matchers.equalTo((Object) 1));
-        return (T) new User();
-      }
-    });
 
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{1}, stat);
@@ -145,7 +133,6 @@ public class CacheableQueryOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter());
 
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{Arrays.asList(1, 2, 3)}, stat);
@@ -179,26 +166,7 @@ public class CacheableQueryOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> List<T> queryForList(DataSource ds, BoundSql boundSql,
-                                      ListSupplier listSupplier, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id in (?,?,?)";
-        assertThat(sql, Matchers.equalTo(descSql));
-        assertThat(args.length, Matchers.equalTo(3));
-        assertThat(args[0], Matchers.equalTo((Object) 1));
-        assertThat(args[1], Matchers.equalTo((Object) 2));
-        assertThat(args[2], Matchers.equalTo((Object) 3));
 
-        List<T> users = new ArrayList<T>();
-        users.add((T) new User(1, "1"));
-        users.add((T) new User(2, "2"));
-        users.add((T) new User(3, "3"));
-        return users;
-      }
-    });
 
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{Arrays.asList(1, 2, 3)}, stat);
@@ -234,24 +202,7 @@ public class CacheableQueryOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public <T> List<T> queryForList(DataSource ds, BoundSql boundSql,
-                                      ListSupplier listSupplier, RowMapper<T> rowMapper) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "select * from user where id in (?,?)";
-        assertThat(sql, Matchers.equalTo(descSql));
-        assertThat(args.length, Matchers.equalTo(2));
-        assertThat(args[0], Matchers.equalTo((Object) 1));
-        assertThat(args[1], Matchers.equalTo((Object) 3));
 
-        List<T> users = new ArrayList<T>();
-        users.add((T) new User(1, "1"));
-        users.add((T) new User(3, "3"));
-        return users;
-      }
-    });
 
     InvocationStat stat = InvocationStat.create();
     operator.execute(new Object[]{Arrays.asList(1, 2, 3)}, stat);

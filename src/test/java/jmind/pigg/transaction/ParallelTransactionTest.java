@@ -30,6 +30,7 @@ import jmind.pigg.transaction.Transaction;
 import jmind.pigg.transaction.TransactionFactory;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -47,7 +48,7 @@ public class ParallelTransactionTest {
   private static Pigg pigg;
 
   static {
-    pigg = Pigg.newInstance(new SimpleDataSourceFactory("db1", ds1), new SimpleDataSourceFactory("db2", ds2));
+    pigg = Pigg.newInstance(Arrays.asList(new SimpleDataSourceFactory("db1", ds1), new SimpleDataSourceFactory("db2", ds2)));
   }
 
   private final static MsgDao dao = pigg.create(MsgDao.class);

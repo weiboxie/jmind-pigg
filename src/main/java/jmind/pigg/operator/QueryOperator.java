@@ -18,6 +18,9 @@ package jmind.pigg.operator;
 
 import javax.sql.DataSource;
 
+import jmind.base.util.bean.BeanUtil;
+import jmind.base.util.bean.PropertyMeta;
+import jmind.base.util.reflect.ClassUtil;
 import jmind.pigg.annotation.Column;
 import jmind.pigg.annotation.Mapper;
 import jmind.pigg.annotation.Result;
@@ -34,9 +37,7 @@ import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.parser.EmptyObjectException;
 import jmind.pigg.stat.InvocationStat;
 import jmind.pigg.type.TypeHandlerRegistry;
-import jmind.pigg.util.bean.BeanUtil;
-import jmind.pigg.util.bean.PropertyMeta;
-import jmind.pigg.util.reflect.Reflection;
+
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -89,13 +90,15 @@ public class QueryOperator extends AbstractOperator {
       }
     }
 
-    BoundSql boundSql = context.getBoundSql();
     DataSource ds = dataSourceGenerator.getDataSource(context, daoClass);
-    invocationInterceptorChain.intercept(boundSql, context, ds); // 拦截器
-    return executeFromDb(ds, boundSql, stat);
+    invocationInterceptorChain.preIntercept(context, ds); // 拦截器 前置方法
+    Object result = executeFromDb(ds, context.getBoundSql(), stat);
+    invocationInterceptorChain.postIntercept(context,result);// 拦截器 后置方法
+    return result;
   }
 
   private Object executeFromDb(final DataSource ds, final BoundSql boundSql, InvocationStat stat) {
+    JdbcOperations jdbcOperations=JdbcOperationsFactory.getJdbcOperations();
     Object r;
     boolean success = false;
     long now = System.nanoTime();
@@ -140,7 +143,7 @@ public class QueryOperator extends AbstractOperator {
   private <T> RowMapper<?> getRowMapper(Class<T> clazz, ReturnDescriptor rd) {
     Mapper mapperAnno = rd.getAnnotation(Mapper.class);
     if (mapperAnno != null) { // 自定义mapper
-      return Reflection.instantiateClass(mapperAnno.value());
+      return ClassUtil.instantiateClass(mapperAnno.value());
     }
 
     if (TypeHandlerRegistry.hasTypeHandler(clazz)) { // 单列mapper

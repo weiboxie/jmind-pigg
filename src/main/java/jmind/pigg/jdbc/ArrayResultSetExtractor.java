@@ -21,8 +21,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmind.base.util.CollectionUtil;
 import jmind.pigg.mapper.RowMapper;
-import jmind.pigg.util.Arrays;
+
 
 /**
  * @author xieweibo
@@ -42,7 +43,7 @@ public class ArrayResultSetExtractor<T> implements ResultSetExtractor<Object> {
     while (rs.next()) {
       list.add(rowMapper.mapRow(rs, rowNum++));
     }
-    return Arrays.toArray(list, rowMapper.getMappedClass());
+    return CollectionUtil.toArray(list, rowMapper.getMappedClass());
   }
 
 }

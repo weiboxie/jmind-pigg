@@ -18,8 +18,10 @@ package jmind.pigg.crud.common.builder;
 
 import java.util.List;
 
+import jmind.base.util.DataUtil;
+import jmind.base.util.GlobalConstants;
 import jmind.pigg.crud.Builder;
-import jmind.pigg.util.Joiner;
+
 
 /**
  * @author xieweibo
@@ -29,7 +31,7 @@ public class CommonFindAllBuilder implements Builder {
     private final String SQL;
 
     public CommonFindAllBuilder(List<String> cols) {
-        String s1 = Joiner.on(", ").join(cols);
+        String s1 = DataUtil.join(cols, GlobalConstants.COMMA);
         SQL = String.format("select %s from #table", s1, s1);
     }
 

@@ -18,6 +18,8 @@ package jmind.pigg.plugin.stats;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +29,7 @@ import java.io.PrintWriter;
 /**
  * @author xieweibo
  */
+@WebServlet(name="pigg-stat",urlPatterns="/pigg-stat",initParams={@WebInitParam(name="key",value="pigg")})
 public class PiggStatServlet extends HttpServlet {
 
   private final static String KEY_NAME = "key";

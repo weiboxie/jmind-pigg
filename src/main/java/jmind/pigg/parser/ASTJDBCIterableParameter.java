@@ -19,13 +19,15 @@ package jmind.pigg.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jmind.base.util.DataUtil;
+import jmind.base.util.Iterables;
 import jmind.pigg.binding.BindingParameter;
 import jmind.pigg.binding.BindingParameterInvoker;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.parser.generate.Parser;
 import jmind.pigg.parser.generate.ParserVisitor;
 import jmind.pigg.type.TypeHandler;
-import jmind.pigg.util.Iterables;
+
 import jmind.pigg.util.Strings;
 import jmind.pigg.util.jdbc.JdbcType;
 
@@ -61,7 +63,7 @@ public class ASTJDBCIterableParameter extends AbstractRenderableNode implements 
     String group2 = m.group(2);
     String group4 = m.group(4);
     String parameterName = group1;
-    String propertyPath = Strings.isNotEmpty(group2) ?
+    String propertyPath = DataUtil.isNotEmpty(group2) ?
         group2.substring(1) :
         "";
     JdbcType jdbcType = null;

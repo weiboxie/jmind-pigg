@@ -50,7 +50,7 @@ import jmind.pigg.support.MockCacheBy;
 import jmind.pigg.support.MockDB;
 import jmind.pigg.support.MockSQL;
 import jmind.pigg.support.model4table.User;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 /**
  * @author xieweibo
@@ -70,19 +70,7 @@ public class CacheableUpdateOperatorTest {
       }
     }, new MockCacheBy("id"));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "update user set name=? where id=?";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) "ash"));
-        assertThat(args[1], equalTo((Object) 100));
-        return 1;
-      }
-    });
+
 
     User user = new User();
     user.setId(100);
@@ -109,19 +97,6 @@ public class CacheableUpdateOperatorTest {
       }
     }, new MockCacheBy(""));
 
-    operator.setJdbcOperations(new JdbcOperationsAdapter() {
-      @Override
-      public int update(DataSource ds, BoundSql boundSql) {
-        String sql = boundSql.getSql();
-        Object[] args = boundSql.getArgs().toArray();
-        String descSql = "update user set name=ash where id in (?,?)";
-        assertThat(sql, equalTo(descSql));
-        assertThat(args.length, equalTo(2));
-        assertThat(args[0], equalTo((Object) 100));
-        assertThat(args[1], equalTo((Object) 200));
-        return 1;
-      }
-    });
 
     List<Integer> ids = Arrays.asList(100, 200);
     InvocationStat stat = InvocationStat.create();

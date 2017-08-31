@@ -1,4 +1,4 @@
-Mango: Distributed ORM Framework for Java
+jmind-pigg: Distributed ORM Framework for Java
 =========================================
 
 [![Build Status](https://travis-ci.org/jfaster/mango.svg?branch=master)](https://travis-ci.org/jfaster/mango)

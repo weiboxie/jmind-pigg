@@ -23,6 +23,14 @@ package jmind.pigg.operator;
  */
 public class Config {
 
+  /**
+   * 是否懒加载
+   */
+  private boolean isLazyInit = false;
+  /**
+   * 是否下划线的形式
+   */
+  private boolean isUnderscoreName=true;
   private boolean isCompatibleWithEmptyList = true;
 
   private boolean isCheckColumn = false;
@@ -63,12 +71,29 @@ public class Config {
     isUseTransactionForBatchUpdate = useTransactionForBatchUpdate;
   }
 
+  public boolean isLazyInit() {
+    return isLazyInit;
+  }
+
+  public void setLazyInit(boolean isLazyInit) {
+    this.isLazyInit = isLazyInit;
+  }
+
+  public boolean isUnderscoreName() {
+    return isUnderscoreName;
+  }
+
+  public void setUnderscoreName(boolean underscoreName) {
+    isUnderscoreName = underscoreName;
+  }
+
   public Config copy() {
     Config config = new Config();
     config.setCompatibleWithEmptyList(isCompatibleWithEmptyList());
     config.setCheckColumn(isCheckColumn());
     config.setUseActualParamName(isUseActualParamName());
     config.setUseTransactionForBatchUpdate(isUseTransactionForBatchUpdate());
+    config.setUnderscoreName(isUnderscoreName());
     return config;
   }
 }

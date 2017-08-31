@@ -18,11 +18,12 @@ package jmind.pigg.crud;
 
 import javax.annotation.Nullable;
 
+import jmind.base.util.reflect.TokenTuple;
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.descriptor.Generic;
 import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.descriptor.ParameterDescriptor;
-import jmind.pigg.util.reflect.TokenTuple;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

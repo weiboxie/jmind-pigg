@@ -25,7 +25,7 @@ import jmind.pigg.invoker.FunctionalGetterInvoker;
 import jmind.pigg.invoker.GetterFunction;
 import jmind.pigg.invoker.GetterInvoker;
 import jmind.pigg.invoker.function.LongListToStringFunction;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import org.junit.Rule;
 import org.junit.Test;

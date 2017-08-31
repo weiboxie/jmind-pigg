@@ -16,7 +16,9 @@
 
 package jmind.pigg.binding;
 
-import jmind.pigg.util.Objects;
+import jmind.base.util.DataUtil;
+
+import jmind.base.util.Objects;
 import jmind.pigg.util.Strings;
 import jmind.pigg.util.jdbc.JdbcType;
 
@@ -42,7 +44,7 @@ public class BindingParameter {
   }
 
   public BindingParameter rightShift() {
-    String newPropertyPath = Strings.isNotEmpty(propertyPath) ?
+    String newPropertyPath = DataUtil.isNotEmpty(propertyPath) ?
         parameterName + "." + propertyPath :
         parameterName;
     return BindingParameter.create("", newPropertyPath, jdbcType);

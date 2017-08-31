@@ -21,7 +21,7 @@ package jmind.pigg.datasource;
  */
 public abstract class AbstractDataSourceFactory implements DataSourceFactory {
 
-  public final static String DEFULT_NAME = "DEFAULT";
+  public final static String DEFULT_NAME = "dataSource";
 
   private String name;
 

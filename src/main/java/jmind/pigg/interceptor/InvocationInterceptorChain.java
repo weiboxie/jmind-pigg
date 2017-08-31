@@ -29,6 +29,7 @@ import java.util.List;
 /**
  * @author xieweibo
  */
+
 public class InvocationInterceptorChain {
 
   private InterceptorChain interceptorChain;
@@ -45,16 +46,30 @@ public class InvocationInterceptorChain {
     this.sqlType = sqlType;
   }
 
-  public void intercept(BoundSql boundSql, InvocationContext context, DataSource dataSource) {
-    if (interceptorChain.getInterceptors() != null) {
-      List<Object> parameterValues = context.getParameterValues();
-      List<Parameter> parameters = new ArrayList<Parameter>(parameterValues.size());
-      for (int i = 0; i < parameterValues.size(); i++) {
-        ParameterDescriptor pd = parameterDescriptors.get(i);
-        parameters.add(new Parameter(pd, parameterValues.get(i)));
+//  public void intercept(BoundSql boundSql, InvocationContext context, DataSource dataSource) {
+//    if (interceptorChain != null) {
+//      List<Object> parameterValues = context.getParameterValues();
+//      List<Parameter> parameters = new ArrayList<Parameter>(parameterValues.size());
+//      for (int i = 0; i < parameterValues.size(); i++) {
+//        ParameterDescriptor pd = parameterDescriptors.get(i);
+//        parameters.add(new Parameter(pd, parameterValues.get(i)));
+//      }
+//      interceptorChain.intercept(boundSql, parameters, sqlType, dataSource);
+//    }
+//  }
+
+  public void preIntercept(InvocationContext context,  DataSource dataSource) {
+      if(interceptorChain!=null){
+        interceptorChain.preIntercept(context, sqlType, dataSource);
       }
-      interceptorChain.intercept(boundSql, parameters, sqlType, dataSource);
-    }
   }
+
+
+  public void postIntercept(InvocationContext context, Object result) {
+     if(interceptorChain!=null){
+       interceptorChain.postIntercept(context,sqlType,result);
+     }
+  }
+
 
 }

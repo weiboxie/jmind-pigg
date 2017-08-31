@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import jmind.pigg.descriptor.Generic;
 import jmind.pigg.descriptor.Methods;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

@@ -16,22 +16,22 @@
 
 package jmind.pigg.crud.common.factory;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 import jmind.pigg.crud.Builder;
 import jmind.pigg.crud.CrudMeta;
 import jmind.pigg.crud.common.builder.CommonSaveBuilder;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author xieweibo
  */
-public class CommonSaveAndGeneratedIdBuilderFactory extends AbstractCommonBuilderFactory {
+public class CommonReplaceBuilderFactory extends AbstractCommonBuilderFactory {
 
     @Override
     String expectedMethodName() {
-        return "saveAndGeneratedId";
+        return "replace";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CommonSaveAndGeneratedIdBuilderFactory extends AbstractCommonBuilde
 
     @Override
     Builder createCommonBuilder(CrudMeta cm) {
-        return new CommonSaveBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns(), false);
+        return new CommonSaveBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns(), true);
     }
 
 }

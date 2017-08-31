@@ -24,7 +24,7 @@ import jmind.pigg.binding.ParameterContext;
 import jmind.pigg.descriptor.ParameterDescriptor;
 import jmind.pigg.parser.ASTRootNode;
 import jmind.pigg.parser.generate.Parser;
-import jmind.pigg.util.reflect.TypeToken;
+import jmind.base.util.reflect.TypeToken;
 
 import org.junit.Rule;
 import org.junit.Test;

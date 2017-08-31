@@ -16,9 +16,10 @@
 
 package jmind.pigg.crud.custom.builder;
 
-import java.util.List;
+import jmind.base.util.DataUtil;
+import jmind.base.util.GlobalConstants;
 
-import jmind.pigg.util.Joiner;
+import java.util.List;
 
 /**
  * @author xieweibo
@@ -38,7 +39,7 @@ public class CustomQueryBuilder extends AbstractCustomBuilder {
 
   @Override
   public String buildSql() {
-    String s1 = Joiner.on(", ").join(columns);
+    String s1 = DataUtil.join(columns, GlobalConstants.COMMA);
     return String.format(SQL_TEMPLATE, s1, tailOfSql);
   }
 

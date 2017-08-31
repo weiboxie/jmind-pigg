@@ -20,12 +20,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmind.base.util.reflect.TypeToken;
 import jmind.pigg.invoker.GetterInvoker;
 import jmind.pigg.invoker.InvokerCache;
 import jmind.pigg.invoker.UnreachablePropertyException;
 import jmind.pigg.util.NestedProperty;
 import jmind.pigg.util.PropertyTokenizer;
-import jmind.pigg.util.reflect.TypeToken;
+
 
 /**
  * @author xieweibo

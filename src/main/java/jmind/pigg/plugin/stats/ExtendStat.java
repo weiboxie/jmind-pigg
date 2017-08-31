@@ -21,12 +21,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmind.base.util.DataUtil;
+import jmind.base.util.ToStringHelper;
 import jmind.pigg.annotation.DB;
 import jmind.pigg.annotation.Sharding;
 import jmind.pigg.sharding.NotUseTableShardingStrategy;
 import jmind.pigg.stat.OperatorStat;
 import jmind.pigg.util.Strings;
-import jmind.pigg.util.ToStringHelper;
+
 
 /**
  * @author xieweibo
@@ -54,7 +56,7 @@ public class ExtendStat {
     String sql = operatorStat.getSql();
     DB dbAnno = operatorStat.getDaoClass().getAnnotation(DB.class);
     String table = dbAnno.table();
-    if (Strings.isNotEmpty(table)) {
+    if (DataUtil.isNotEmpty(table)) {
       Sharding shardingAnno = method.getAnnotation(Sharding.class);
       if (shardingAnno == null) {
         shardingAnno = operatorStat.getDaoClass().getAnnotation(Sharding.class);

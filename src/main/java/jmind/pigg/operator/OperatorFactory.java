@@ -49,7 +49,7 @@ public class OperatorFactory {
 
   private final CacheHandler cacheHandler;
   private final InterceptorChain interceptorChain;
-  private final JdbcOperations jdbcOperations;
+
   private final Config config;
   private final TableGeneratorFactory tableGeneratorFactory;
   private final DataSourceGeneratorFactory dataSourceGeneratorFactory;
@@ -59,7 +59,7 @@ public class OperatorFactory {
     this.cacheHandler = cacheHandler;
     this.interceptorChain = interceptorChain;
     this.config = config;
-    this.jdbcOperations = new JdbcTemplate();
+
     this.tableGeneratorFactory = new TableGeneratorFactory();
     this.dataSourceGeneratorFactory = new DataSourceGeneratorFactory(dataSourceFactoryGroup);
   }
@@ -132,7 +132,6 @@ public class OperatorFactory {
     operator.setDataSourceGenerator(dataSourceGenerator);
     operator.setInvocationContextFactory(InvocationContextFactory.create(context));
     operator.setInvocationInterceptorChain(chain);
-    operator.setJdbcOperations(jdbcOperations);
     return operator;
   }
 

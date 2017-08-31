@@ -19,6 +19,7 @@ package jmind.pigg.interceptor;
 import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
+import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.LinkedList;
@@ -29,33 +30,28 @@ import java.util.List;
  */
 public class InterceptorChain {
 
-  private List<Interceptor> interceptors;
+  private final List<Interceptor> interceptors=new LinkedList<>();
 
   public void addInterceptor(Interceptor interceptor) {
-    initInterceptorList();
     interceptors.add(interceptor);
   }
 
-  public void intercept(BoundSql boundSql, List<Parameter> parameters, SQLType sqlType, DataSource dataSource) {
-    if (getInterceptors() != null) {
-      for (Interceptor interceptor : getInterceptors()) {
-        interceptor.intercept(boundSql, parameters, sqlType, dataSource);
-      }
+  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+      for (Interceptor interceptor : interceptors) {
+        interceptor.preIntercept(context, sqlType, dataSource);
     }
   }
 
-  public List<Interceptor> getInterceptors() {
-    return interceptors;
-  }
-
-  public void setInterceptors(List<Interceptor> interceptors) {
-    this.interceptors = interceptors;
-  }
-
-  private void initInterceptorList() {
-    if (interceptors == null) {
-      interceptors = new LinkedList<Interceptor>();
+// 后置拦截器应该导过来循环
+  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+    for (int i=interceptors.size()-1;i>=0;i--) {
+      interceptors.get(i).postIntercept(context, sqlType, result);
     }
   }
+
+
+
+
+
 
 }

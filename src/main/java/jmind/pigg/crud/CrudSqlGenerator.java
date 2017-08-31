@@ -40,6 +40,7 @@ public class CrudSqlGenerator implements SqlGenerator {
     commonBuilderFactories.add(new CommonFindOneBuilderFactory());
     commonBuilderFactories.add(new CommonGetMultiBuilderFactory());
     commonBuilderFactories.add(new CommonFindAllBuilderFactory());
+    commonBuilderFactories.add(new CommonFindPageBuilderFactory());
     commonBuilderFactories.add(new CommonCountBuilderFactory());
     commonBuilderFactories.add(new CommonUpdateBuilderFactory());
     commonBuilderFactories.add(new CommonBatchUpdateBuilderFactory());
@@ -47,10 +48,13 @@ public class CrudSqlGenerator implements SqlGenerator {
     
     commonBuilderFactories.add(new CommonSetBuilderFactory());
     commonBuilderFactories.add(new CommonBatchSetBuilderFactory());
+    commonBuilderFactories.add(new CommonReplaceBuilderFactory());
 
     customBuilderFactories.add(new CustomQueryBuilderFactory());
     customBuilderFactories.add(new CustomCountBuilderFactory());
     customBuilderFactories.add(new CustomDeleteBuilderFactory());
+
+
   }
 
   @Override
