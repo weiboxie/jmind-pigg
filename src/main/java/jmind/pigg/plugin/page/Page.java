@@ -29,9 +29,9 @@ public class Page {
   /**
    * 页面大小
    */
-  private int pageSize=10;
+  private int pageSize=20;
 
-  private long total;
+  private long totalNum;
   private String groupBy ;
   private String oderBy;
 
@@ -88,14 +88,13 @@ public void setOderBy(String oderBy) {
     this.pageSize = pageSize;
   }
 
-  public long getTotal() {
-    return total;
+  public long getTotalNum() {
+    return totalNum;
   }
 
-  public void setTotal(long total) {
-    this.total = total;
+  public void setTotalNum(long totalNum) {
+    this.totalNum = totalNum;
   }
-
 
   public Object getResult() {
     return result;

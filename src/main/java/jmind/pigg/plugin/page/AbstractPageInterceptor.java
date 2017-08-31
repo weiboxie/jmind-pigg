@@ -52,7 +52,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
                     handleTotal(totalBoundSql);
                     SingleColumnRowMapper<Long> mapper = new SingleColumnRowMapper<Long>(long.class);
                     long total = JdbcOperationsFactory.getJdbcOperations().queryForObject(dataSource, totalBoundSql, mapper);
-                    page.setTotal(total);
+                    page.setTotalNum(total);
                 }
 
                 // 分页处理
