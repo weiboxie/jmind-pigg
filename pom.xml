@@ -75,7 +75,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -98,25 +97,21 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.29</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
-            <version>1.9</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -126,12 +121,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>8.1.16.v20140903</version>
-            <scope>test</scope>
-        </dependency>
+
 
 
         <dependency>
