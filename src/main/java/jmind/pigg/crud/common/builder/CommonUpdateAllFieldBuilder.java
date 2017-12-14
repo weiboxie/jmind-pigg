@@ -16,15 +16,17 @@
 
 package jmind.pigg.crud.common.builder;
 
+import jmind.base.util.DataUtil;
+import jmind.base.util.GlobalConstants;
+import jmind.pigg.crud.Builder;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import jmind.pigg.crud.Builder;
 
 /**
  * @author xieweibo
  */
-public class CommonSetBuilder implements Builder {
+public class CommonUpdateAllFieldBuilder implements Builder {
 
     private final static String SQL_TEMPLATE = "update #table set %s where %s";
 
@@ -36,7 +38,7 @@ public class CommonSetBuilder implements Builder {
 
     private final List<String> columns;
 
-    public CommonSetBuilder(String propId, List<String> props, List<String> cols) {
+    public CommonUpdateAllFieldBuilder(String propId, List<String> props, List<String> cols) {
         int index = props.indexOf(propId);
         if (index < 0) {
             throw new IllegalArgumentException("error property id [" + propId + "]");
@@ -50,12 +52,14 @@ public class CommonSetBuilder implements Builder {
 
     @Override
     public String buildSql() {
-        String keyCol = columnId + " = :" + propertyId;
-        StringBuilder exps = new StringBuilder(keyCol);
+        List<String> exps = new ArrayList<String>();
         for (int i = 0; i < properties.size(); i++) {
-            exps.append(" #if(:" + properties.get(i) + ") ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
+            String exp = columns.get(i) + " = :" + properties.get(i);
+            exps.add(exp);
         }
-        return String.format(SQL_TEMPLATE, exps.toString(), keyCol);
+        String s1 = DataUtil.join(exps, GlobalConstants.COMMA);
+        String s2 = columnId + " = :" + propertyId;
+        return String.format(SQL_TEMPLATE, s1, s2);
     }
 
 }

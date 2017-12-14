@@ -46,8 +46,8 @@ public class CrudSqlGenerator implements SqlGenerator {
     commonBuilderFactories.add(new CommonBatchUpdateBuilderFactory());
     commonBuilderFactories.add(new CommonDeleteBuilderFactory());
     
-    commonBuilderFactories.add(new CommonSetBuilderFactory());
-    commonBuilderFactories.add(new CommonBatchSetBuilderFactory());
+    commonBuilderFactories.add(new CommonUpdateAllFieldBuilderFactory());
+    commonBuilderFactories.add(new CommonBatchUpdateAllFieldBuilderFactory());
     commonBuilderFactories.add(new CommonReplaceBuilderFactory());
 
     customBuilderFactories.add(new CustomQueryBuilderFactory());

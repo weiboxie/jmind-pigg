@@ -53,7 +53,7 @@ public class Msg {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).add("uid", uid).add("content", content).toString();
+    return MoreObjects.toStringHelper(this).add("id", id).add("uid", uid).add("content", content).add("userNamre",userName).toString();
   }
 
   public static List<Msg> createRandomMsgs(int num) {

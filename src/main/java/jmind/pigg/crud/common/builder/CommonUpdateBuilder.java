@@ -16,12 +16,10 @@
 
 package jmind.pigg.crud.common.builder;
 
-import jmind.base.util.DataUtil;
-import jmind.base.util.GlobalConstants;
-import jmind.pigg.crud.Builder;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jmind.pigg.crud.Builder;
 
 /**
  * @author xieweibo
@@ -52,14 +50,12 @@ public class CommonUpdateBuilder implements Builder {
 
     @Override
     public String buildSql() {
-        List<String> exps = new ArrayList<String>();
+        String keyCol = columnId + " = :" + propertyId;
+        StringBuilder exps = new StringBuilder(keyCol);
         for (int i = 0; i < properties.size(); i++) {
-            String exp = columns.get(i) + " = :" + properties.get(i);
-            exps.add(exp);
+            exps.append(" #if(:" + properties.get(i) + ") ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
         }
-        String s1 = DataUtil.join(exps, GlobalConstants.COMMA);
-        String s2 = columnId + " = :" + propertyId;
-        return String.format(SQL_TEMPLATE, s1, s2);
+        return String.format(SQL_TEMPLATE, exps.toString(), keyCol);
     }
 
 }

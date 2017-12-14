@@ -16,13 +16,13 @@
 
 package jmind.pigg.crud.common.factory;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 import jmind.pigg.crud.Builder;
 import jmind.pigg.crud.CrudMeta;
 import jmind.pigg.crud.common.builder.CommonUpdateBuilder;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xieweibo

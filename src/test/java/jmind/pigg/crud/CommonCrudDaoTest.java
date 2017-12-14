@@ -53,8 +53,12 @@ public class CommonCrudDaoTest {
     public static void main(String[] args) {
         MsgDao dao = pigg.create(MsgDao.class);
         //      System.out.println(GeneratedId.class.getSimpleName());
-        //      Msg msg = Msg.createRandomMsg();
-
+           Msg msg = new Msg();
+           int id=13;
+        msg.setId(id);
+msg.setUid(101);
+        msg.setUserName("bb");
+        dao.updateAllField(msg);
         //      List<Msg> list=new ArrayList<>();
         //      for(int i=10;i<15;i++){
         //          msg=new Msg();
@@ -71,15 +75,14 @@ public class CommonCrudDaoTest {
         //     msg.setContent(null);
         //     msg.setUserName("wave");
 
-        List<Msg> all = dao.findAll(Arrays.asList(13, 14, 15));
-        System.out.println(all);
+//        List<Msg> all = dao.findAll(Arrays.asList(13, 14, 15));
+//        System.out.println(all);
 
-        //      msg.setId(id);
-        //      System.out.println(dao.findOne(id));
-        //      System.out.println("---------------"+dao.count());
+
+              System.out.println(dao.findOne(id));
+              System.out.println("---------------"+dao.count());
         //     System.out.println(dao.findAll(Arrays.asList(2,3)));
-        //     msg.setContent("abcde");
-        //     dao.update(msg);
+
     }
 
     // @Test

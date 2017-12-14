@@ -16,39 +16,42 @@
 
 package jmind.pigg.crud.common.factory;
 
+import jmind.base.util.reflect.DynamicTokens;
+import jmind.base.util.reflect.TypeToken;
+import jmind.pigg.crud.Builder;
+import jmind.pigg.crud.CrudMeta;
+import jmind.pigg.crud.common.builder.CommonUpdateAllFieldBuilder;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmind.pigg.crud.Builder;
-import jmind.pigg.crud.CrudMeta;
-import jmind.pigg.crud.common.builder.CommonSetBuilder;
 
 /**
  * @author xieweibo
  */
-public class CommonSetBuilderFactory extends AbstractCommonBuilderFactory {
+public class CommonBatchUpdateAllFieldBuilderFactory extends AbstractCommonBuilderFactory {
 
     @Override
     String expectedMethodName() {
-        return "set";
+        return "updateAllField";
     }
 
     @Override
     Type expectedReturnType(Class<?> entityClass) {
-        return int.class;
+        return int[].class;
     }
 
     @Override
     List<Type> expectedParameterType(Class<?> entityClass, Class<?> idClass) {
         List<Type> types = new ArrayList<Type>();
-        types.add(entityClass);
+        types.add(DynamicTokens.collectionToken(TypeToken.of(entityClass)).getType());
         return types;
     }
 
     @Override
     Builder createCommonBuilder(CrudMeta cm) {
-        return new CommonSetBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns());
+        return new CommonUpdateAllFieldBuilder(cm.getPropertyId(), cm.getProperties(), cm.getColumns());
     }
 
 }
