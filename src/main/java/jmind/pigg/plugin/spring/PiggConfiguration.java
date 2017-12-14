@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by weibo.xwb on 2017/8/25.
+ *
+ * @author weibo.xwb
+ * @date 2017/8/25
  */
 @Configuration
 public class PiggConfiguration implements ImportBeanDefinitionRegistrar {
