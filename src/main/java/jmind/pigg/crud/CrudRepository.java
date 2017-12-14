@@ -30,40 +30,46 @@ import java.util.List;
 @UseSqlGenerator(CrudSqlGenerator.class)
 public interface CrudRepository<T, ID> extends Generic<T, ID> {
     T findOne(ID id);
+
     List<T> findAll();
+
     List<T> findAll(Collection<ID> ids);
 
 
     List<T> findAll(Page page);
+
     long count();
 
-  int save(T entity);
+    int save(T entity);
 
-  @GeneratedId
-  int saveAndGeneratedId(T entity);
+    @GeneratedId
+    int saveAndGeneratedId(T entity);
 
-  void save(Collection<T> entities);
-
-    /**
-     *   update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
-      * @param entity
-     * @return
-     */
-  int update(T entity);
-
-  int[] update(Collection<T> entities);
+    void save(Collection<T> entities);
 
     /**
      * update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
+     *
      * @param entity
      * @return
      */
-  int updateAllField(T entity);
+    int update(T entity);
 
-  int[] updateAllField(Collection<T> entities);
-  
-  int delete(ID id);
-  // 目前此接口只支持mysql
-  int replace(T entity);
+    int[] update(Collection<T> entities);
+
+    /**
+     * update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
+     *
+     * @param entity
+     * @return
+     */
+    int updateAllField(T entity);
+
+    int[] updateAllField(Collection<T> entities);
+
+    int delete(ID id);
+
+    // 目前此接口只支持mysql
+    int replace(T entity);
 
 }
