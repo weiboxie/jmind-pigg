@@ -61,12 +61,14 @@ public class PiggConfiguration implements ImportBeanDefinitionRegistrar {
             }
             basePackages=new String[]{mainClass.getPackage().getName()};
         }
+
+        Class<?> factoryBean = annoAttrs.getClass("factoryBean");
         for (Class<?> daoClass : findDaoClasses(basePackages)) {
             GenericBeanDefinition bf = new GenericBeanDefinition();
             bf.setBeanClassName(daoClass.getName());
             MutablePropertyValues pvs = bf.getPropertyValues();
             pvs.addPropertyValue("daoClass", daoClass);
-            bf.setBeanClass(annoAttrs.getClass("factoryBean"));
+            bf.setBeanClass(factoryBean);
             bf.setPropertyValues(pvs);
             bf.setLazyInit(true);
             registry.registerBeanDefinition(daoClass.getName(), bf);
