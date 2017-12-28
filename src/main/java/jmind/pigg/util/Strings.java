@@ -17,8 +17,9 @@
 package jmind.pigg.util;
 
 import jmind.base.util.DataUtil;
+import org.slf4j.helpers.MessageFormatter;
 
-import javax.annotation.Nullable;
+
 
 /**
  * @author xieweibo
@@ -28,6 +29,10 @@ public class Strings {
 
   public static String getFullName(String name, String path) {
     return ":" + (DataUtil.isNotEmpty(path) ? name + "." + path : name);
+  }
+
+  public static String format(String pattern, Object... arguments) {
+    return MessageFormatter.arrayFormat(pattern, arguments).getMessage();
   }
 
 

@@ -21,7 +21,7 @@ package jmind.pigg.exception;
  *
  * @author xieweibo
  */
-public abstract class PiggException extends RuntimeException {
+public  class PiggException extends RuntimeException {
 
   public PiggException(String msg) {
     super(msg);
