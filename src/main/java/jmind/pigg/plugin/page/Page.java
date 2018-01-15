@@ -33,7 +33,7 @@ public class Page {
 
   private long totalNum;
   private String groupBy ;
-  private String oderBy;
+  private String orderBy;
 
   private Object result ;
 
@@ -45,13 +45,13 @@ public void setGroupBy(String groupBy) {
     this.groupBy = groupBy;
 }
 
-public String getOderBy() {
-    return oderBy;
-}
+  public String getOrderBy() {
+    return orderBy;
+  }
 
-public void setOderBy(String oderBy) {
-    this.oderBy = oderBy;
-}
+  public void setOrderBy(String orderBy) {
+    this.orderBy = orderBy;
+  }
 
   public Page() {
   }

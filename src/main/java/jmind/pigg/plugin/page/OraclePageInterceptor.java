@@ -43,8 +43,8 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
         if (DataUtil.isNotEmpty(page.getGroupBy())) {
             context.writeToSqlBuffer(" group by " + page.getGroupBy());
         }
-        if (DataUtil.isNotEmpty(page.getOderBy())) {
-            context.writeToSqlBuffer(" order by " + page.getOderBy());
+        if (DataUtil.isNotEmpty(page.getOrderBy())) {
+            context.writeToSqlBuffer(" order by " + page.getOrderBy());
         }
 
         int startRow = (page.getPage() - 1) * page.getPageSize();
@@ -61,8 +61,8 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
         if (DataUtil.isNotEmpty(page.getGroupBy())) {
             sql += " group by " + page.getGroupBy();
         }
-        if (DataUtil.isNotEmpty(page.getOderBy())) {
-            sql += " order by " + page.getOderBy();
+        if (DataUtil.isNotEmpty(page.getOrderBy())) {
+            sql += " order by " + page.getOrderBy();
         }
         sql = "SELECT * FROM ( SELECT B.* , ROWNUM RN FROM (" + sql + ") B WHERE ROWNUM <= "
                 + endRow + " ) WHERE RN > " + startRow;

@@ -45,8 +45,8 @@ public class MySQLPageInterceptor extends AbstractPageInterceptor {
     if(DataUtil.isNotEmpty(page.getGroupBy())){
       context.writeToSqlBuffer(" group by "+page.getGroupBy());
     }
-    if(DataUtil.isNotEmpty(page.getOderBy())){
-      context.writeToSqlBuffer(" order by "+page.getOderBy()) ;
+    if(DataUtil.isNotEmpty(page.getOrderBy())){
+      context.writeToSqlBuffer(" order by "+page.getOrderBy()) ;
     }
 
     context.writeToSqlBuffer(" limit ?, ?");
