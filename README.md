@@ -11,7 +11,7 @@ Performance and Simplicity are the biggest advantage of the Mango data mapper ov
 In our payment system, we use mango to build a distributed payment order system
 that can handle 120000+ payment order per second.
 
-Documentation is at http://mango.jfaster.org/
+
 
 Requires JDK 1.6 or higher.
 
@@ -35,9 +35,7 @@ To add a dependency on Mango using Maven, use the following:
 JMH Benchmarks
 --------------
 
-Microbenchmarks were created to isolate and measure the overhead of ORM framework using the [JMH microbenchmark framework](http://openjdk.java.net/projects/code-tools/jmh/) developed by the Oracle JVM performance team. You can checkout the [Mango benchmark project for details](https://github.com/jfaster/mango-benchmark) and review/run the benchmarks yourself.
 
-![](https://raw.githubusercontent.com/jfaster/mango-benchmark/master/benchmark.png)
 
  * Jdbc means using only native jdbc API, do not use any ORM frameworks.
  * One *Query Cycle* is defined as single ``select id, name, age from user where id = ?``.
