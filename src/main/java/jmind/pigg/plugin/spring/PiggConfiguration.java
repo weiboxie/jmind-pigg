@@ -82,8 +82,9 @@ public class PiggConfiguration implements ImportBeanDefinitionRegistrar {
     private List<String> getPackages(String[] packages) {
         List<String> locationPatterns=new ArrayList<>();
         for (String p : packages) {
-                String locationPattern = "classpath*:" + p.replaceAll("\\.", "/") + "/**/*" +   "Dao.class";
-                locationPatterns.add(locationPattern);
+                String locationPattern = "classpath*:" + p.replaceAll("\\.", "/") + "/**/*" ;
+                locationPatterns.add(locationPattern+   "Dao.class");
+                locationPatterns.add(locationPattern+   "DAO.class");
         }
         return locationPatterns;
     }
