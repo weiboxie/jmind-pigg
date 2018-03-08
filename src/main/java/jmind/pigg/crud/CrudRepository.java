@@ -26,6 +26,11 @@ import java.util.List;
 
 /**
  * @author xieweibo
+ * save  相当于 insert
+ * saveAndGeneratedId 相当于 insert，返回主键id
+ * update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
+ * 支持 countBy ，deleteBy，removeBy，getBy，findBy
+ * 一般 getBy返回单个对象，findBy返回list 这种命名规则
  */
 @UseSqlGenerator(CrudSqlGenerator.class)
 public interface CrudRepository<T, ID> extends Generic<T, ID> {
