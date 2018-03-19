@@ -78,7 +78,7 @@ public class CrudMeta {
       Id idAnno = propertyMeta.getPropertyAnno(Id.class);
       if (idAnno != null) {
         if (propId != null || colId != null) {
-          throw new IllegalStateException("duplicate ID annotation");
+          throw new IllegalStateException("duplicate Id annotation");
         }
         propId = prop;
         colId = col;
@@ -86,7 +86,7 @@ public class CrudMeta {
       }
     }
     if (autoGenerateId == null) {
-      throw new IllegalStateException("need ID annotation on field to indicate primary key");
+      throw new IllegalStateException("need Id annotation on field to indicate primary key");
     }
 
     properties = Collections.unmodifiableList(props);
