@@ -26,11 +26,6 @@ import jmind.pigg.operator.Pigg;
 import jmind.pigg.support.DataSourceConfig;
 import jmind.pigg.support.Table;
 import jmind.pigg.support.model4table.Account;
-import jmind.pigg.transaction.ConnectionHolder;
-import jmind.pigg.transaction.Transaction;
-import jmind.pigg.transaction.TransactionFactory;
-import jmind.pigg.transaction.TransactionIsolationLevel;
-import jmind.pigg.transaction.TransactionSynchronizationManager;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -71,7 +66,7 @@ public class TransactionTest {
     int num = 50;
     x.add(num);
     y.sub(num);
-    TransactionIsolationLevel level = TransactionIsolationLevel.SERIALIZABLE;
+    Isolation level = Isolation.SERIALIZABLE;
     Transaction tx = TransactionFactory.newTransaction(pigg, AbstractDataSourceFactory.DEFULT_NAME, level);
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(ds);
     assertThat(connHolder, notNullValue());
@@ -105,7 +100,7 @@ public class TransactionTest {
     int num = 50;
     x.add(num);
     y.sub(num);
-    TransactionIsolationLevel level = TransactionIsolationLevel.SERIALIZABLE;
+    Isolation level = Isolation.SERIALIZABLE;
     Transaction tx = TransactionFactory.newTransaction(pigg, AbstractDataSourceFactory.DEFULT_NAME, level);
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(ds);
     assertThat(connHolder, notNullValue());
@@ -141,7 +136,7 @@ public class TransactionTest {
     int num = 50;
     x.add(num);
     y.sub(num);
-    TransactionIsolationLevel level = TransactionIsolationLevel.SERIALIZABLE;
+    Isolation level = Isolation.SERIALIZABLE;
     Transaction tx = TransactionFactory.newTransaction(pigg, AbstractDataSourceFactory.DEFULT_NAME, level);
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(ds);
     assertThat(connHolder, notNullValue());
@@ -168,7 +163,7 @@ public class TransactionTest {
   public void testCommitEmpty() throws Exception {
     int previousLevel = getPreviousLevel();
 
-    TransactionIsolationLevel level = TransactionIsolationLevel.SERIALIZABLE;
+    Isolation level = Isolation.SERIALIZABLE;
     Transaction tx = TransactionFactory.newTransaction(pigg, AbstractDataSourceFactory.DEFULT_NAME, level);
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(ds);
     assertThat(connHolder, notNullValue());
@@ -188,7 +183,7 @@ public class TransactionTest {
   public void testRollbackEmpty() throws Exception {
     int previousLevel = getPreviousLevel();
 
-    TransactionIsolationLevel level = TransactionIsolationLevel.SERIALIZABLE;
+    Isolation level = Isolation.SERIALIZABLE;
     Transaction tx = TransactionFactory.newTransaction(pigg, AbstractDataSourceFactory.DEFULT_NAME, level);
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(ds);
     assertThat(connHolder, notNullValue());

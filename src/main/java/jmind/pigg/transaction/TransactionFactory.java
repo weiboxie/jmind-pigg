@@ -25,7 +25,6 @@ import jmind.pigg.util.logging.InternalLogger;
 import jmind.pigg.util.logging.InternalLoggerFactory;
 
 import java.sql.Connection;
-import java.util.List;
 
 /**
  * @author xieweibo
@@ -34,7 +33,7 @@ public abstract class TransactionFactory {
 
   private final static InternalLogger logger = InternalLoggerFactory.getInstance(TransactionFactory.class);
 
-  public static Transaction newTransaction(Pigg pigg, String dataSourceFactoryName, TransactionIsolationLevel level) {
+  public static Transaction newTransaction(Pigg pigg, String dataSourceFactoryName, Isolation level) {
     DataSource dataSource = pigg.getMasterDataSource(dataSourceFactoryName);
     if (dataSource == null) {
       throw new IllegalArgumentException("Can't find master DataSource from pigg [" + pigg + "] " +
@@ -44,36 +43,36 @@ public abstract class TransactionFactory {
   }
 
   public static Transaction newTransaction(Pigg pigg, String dataSourceFactoryName) {
-    return newTransaction(pigg, dataSourceFactoryName, TransactionIsolationLevel.DEFAULT);
+    return newTransaction(pigg, dataSourceFactoryName, Isolation.DEFAULT);
   }
 
-  public static Transaction newTransaction(String dataSourceFactoryName, TransactionIsolationLevel level) {
+  public static Transaction newTransaction(String dataSourceFactoryName, Isolation level) {
     Pigg piggs = Pigg.getInstance();  
     return newTransaction(piggs, dataSourceFactoryName, level);
   }
 
   public static Transaction newTransaction(String dataSourceFactoryName) {
-    return newTransaction(dataSourceFactoryName, TransactionIsolationLevel.DEFAULT);
+    return newTransaction(dataSourceFactoryName, Isolation.DEFAULT);
   }
 
-  public static Transaction newTransaction(TransactionIsolationLevel level) {
+  public static Transaction newTransaction(Isolation level) {
     return newTransaction(AbstractDataSourceFactory.DEFULT_NAME, level);
   }
 
   public static Transaction newTransaction() {
-    return newTransaction(AbstractDataSourceFactory.DEFULT_NAME, TransactionIsolationLevel.DEFAULT);
+    return newTransaction(AbstractDataSourceFactory.DEFULT_NAME, Isolation.DEFAULT);
   }
 
   public static Transaction newTransaction(DataSource dataSource) {
-    return newTransaction(dataSource, TransactionIsolationLevel.DEFAULT);
+    return newTransaction(dataSource, Isolation.DEFAULT);
   }
 
-  private static Transaction newTransaction(DataSource dataSource, TransactionIsolationLevel level) {
+  private static Transaction newTransaction(DataSource dataSource, Isolation level) {
     if (dataSource == null) {
       throw new IllegalArgumentException("DataSource can't be null");
     }
     if (level == null) {
-      throw new IllegalArgumentException("TransactionIsolationLevel can't be null");
+      throw new IllegalArgumentException("Isolation can't be null");
     }
     ConnectionHolder connHolder = TransactionSynchronizationManager.getConnectionHolder(dataSource);
     return connHolder != null ?
@@ -89,7 +88,7 @@ public abstract class TransactionFactory {
     return transaction;
   }
 
-  private static Transaction createNewTransaction(DataSource dataSource, TransactionIsolationLevel expectedLevel) {
+  private static Transaction createNewTransaction(DataSource dataSource, Isolation expectedLevel) {
     if (logger.isDebugEnabled()) {
       logger.debug("Creating new transaction");
     }
@@ -103,7 +102,7 @@ public abstract class TransactionFactory {
       }
 
       // 设置事务的隔离级别
-      if (expectedLevel != TransactionIsolationLevel.DEFAULT) {
+      if (expectedLevel != Isolation.DEFAULT) {
         previousLevel = conn.getTransactionIsolation();
         if (previousLevel != expectedLevel.getLevel()) {
           if (logger.isDebugEnabled()) {

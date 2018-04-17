@@ -25,7 +25,7 @@ import jmind.pigg.transaction.exception.TransactionException;
 public class TransactionTemplate {
 
   public static void execute(
-      Pigg pigg, String dataSourceFactoryName, TransactionIsolationLevel level,
+      Pigg pigg, String dataSourceFactoryName, Isolation level,
       TransactionAction action) throws TransactionException {
     execute(TransactionFactory.newTransaction(pigg, dataSourceFactoryName, level), action);
   }
@@ -35,7 +35,7 @@ public class TransactionTemplate {
     execute(TransactionFactory.newTransaction(pigg, dataSourceFactoryName), action);
   }
 
-  public static void execute(String dataSourceFactoryName, TransactionIsolationLevel level, TransactionAction action)
+  public static void execute(String dataSourceFactoryName, Isolation level, TransactionAction action)
       throws TransactionException {
     execute(TransactionFactory.newTransaction(dataSourceFactoryName, level), action);
   }
@@ -44,7 +44,7 @@ public class TransactionTemplate {
     execute(TransactionFactory.newTransaction(dataSourceFactoryName), action);
   }
 
-  public static void execute(TransactionIsolationLevel level, TransactionAction action) throws TransactionException {
+  public static void execute(Isolation level, TransactionAction action) throws TransactionException {
     execute(TransactionFactory.newTransaction(level), action);
   }
 

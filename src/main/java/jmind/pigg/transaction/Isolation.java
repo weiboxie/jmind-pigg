@@ -23,7 +23,7 @@ import java.sql.Connection;
  *
  * @author xieweibo
  */
-public enum TransactionIsolationLevel {
+public enum Isolation {
 
   DEFAULT(-1),
   READ_UNCOMMITTED(Connection.TRANSACTION_READ_UNCOMMITTED),
@@ -33,7 +33,7 @@ public enum TransactionIsolationLevel {
 
   private final int level;
 
-  private TransactionIsolationLevel(int level) {
+  private Isolation(int level) {
     this.level = level;
   }
 
