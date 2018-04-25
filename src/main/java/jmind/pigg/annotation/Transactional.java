@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * @Author: xieweibo
+ * https://blog.csdn.net/blueheart20/article/details/44654007
  * @Date: 2018/4/17
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -28,6 +29,7 @@ public @interface Transactional {
 
     /**
      * 一组异常类，遇到时回滚
+     * https://blog.csdn.net/u012557814/article/details/50685374
      */
-    Class<? extends Throwable>[] rollbackFor() default {};
+    Class<? extends Throwable>[] rollbackFor() default {RuntimeException.class,Error.class};
 }

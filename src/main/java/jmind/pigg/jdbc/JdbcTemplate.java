@@ -97,7 +97,7 @@ public class JdbcTemplate implements JdbcOperations {
       setValues(ps, boundSql);
 
       if (logger.isDebugEnabled()) {
-        logger.debug("Executing \"{}\" {}", sql, boundSql.getArgs());
+        logger.debug("update sql=\"{}\",args={}", sql, boundSql.getArgs());
       }
 
       int r = ps.executeUpdate();
@@ -146,7 +146,7 @@ public class JdbcTemplate implements JdbcOperations {
       setValues(ps, boundSql);
 
       if (logger.isDebugEnabled()) {
-        logger.debug("Executing \"{}\" {}", sql, boundSql.getArgs());
+        logger.debug("query sql=\"{}\",args={}", sql, boundSql.getArgs());
       }
 
       rs = ps.executeQuery();
@@ -181,7 +181,7 @@ public class JdbcTemplate implements JdbcOperations {
         for (BoundSql boundSql : boundSqls) {
           debugBatchArgs.add(boundSql.getArgs());
         }
-        logger.debug("Executing \"{}\" {}", sql, debugBatchArgs);
+        logger.debug("batchUpdate sql=\"{}\",args={}", sql, debugBatchArgs);
       }
 
       return ps.executeBatch();
@@ -213,7 +213,7 @@ public class JdbcTemplate implements JdbcOperations {
           setValues(ps, boundSql);
 
           if (logger.isDebugEnabled()) {
-            logger.debug("Executing \"{}\" {}", sql, boundSql.getArgs());
+            logger.debug("batchUpdate sql=\"{}\",args={}", sql, boundSql.getArgs());
           }
 
           r[i] = ps.executeUpdate();

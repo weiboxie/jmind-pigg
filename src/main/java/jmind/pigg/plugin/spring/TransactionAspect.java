@@ -34,8 +34,18 @@ public class TransactionAspect {
             tx.commit();
             return r;
         } catch (Throwable e) {
-            tx.rollback();
+            // 只有是指定的异常才回滚，默认是 RuntimeException 和ERROR
+            for(Class<? extends Throwable> exs:m.rollbackFor()){
+                //if(exs.isAssignableFrom(e.getClass())){
+                if(exs.isInstance(e)){
+                    tx.rollback();
+                    throw e;
+                }
+            }
+
+            tx.commit();
             throw e;
+
         }
 
 
@@ -44,7 +54,7 @@ public class TransactionAspect {
     }
 
 
-    public void execute(ProceedingJoinPoint pjp) {
+    protected void execute(ProceedingJoinPoint pjp) {
         final Transactional m = getAnnotation(pjp, Transactional.class);
         TransactionTemplate.execute(m.value(),new TransactionAction() {
 
