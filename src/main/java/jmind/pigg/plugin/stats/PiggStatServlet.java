@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 
 /**
  * @author xieweibo
+ * spring boot 需要增加 注解 @ServletComponentScan("jmind.pigg.plugin.stats")
  */
 @WebServlet(name="pigg-stat",urlPatterns="/pigg-stat",initParams={@WebInitParam(name="key",value="pigg")})
 public class PiggStatServlet extends HttpServlet {
