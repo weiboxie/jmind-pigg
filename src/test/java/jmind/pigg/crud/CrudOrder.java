@@ -19,9 +19,9 @@ package jmind.pigg.crud;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+import jmind.base.annotation.Ignore;
 import jmind.pigg.annotation.Column;
 import jmind.pigg.annotation.Id;
-import jmind.pigg.annotation.Ignore;
 
 import org.apache.commons.lang.RandomStringUtils;
 

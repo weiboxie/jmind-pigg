@@ -23,9 +23,6 @@ import jmind.base.util.bean.PropertyMeta;
 import jmind.pigg.annotation.Column;
 import jmind.pigg.annotation.Id;
 import jmind.pigg.operator.Pigg;
-import jmind.pigg.util.Strings;
-
-
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;

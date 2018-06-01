@@ -16,9 +16,9 @@
 
 package jmind.pigg.crud;
 
+import jmind.base.annotation.Ignore;
 import jmind.pigg.annotation.Column;
 import jmind.pigg.annotation.Id;
-import jmind.pigg.annotation.Ignore;
 
 /**
  * @author xieweibo
