@@ -16,12 +16,12 @@
 
 package jmind.pigg.crud;
 
+import jmind.base.annotation.Ignore;
 import jmind.base.util.DataUtil;
 import jmind.base.util.bean.BeanUtil;
 import jmind.base.util.bean.PropertyMeta;
 import jmind.pigg.annotation.Column;
 import jmind.pigg.annotation.Id;
-import jmind.pigg.annotation.Ignore;
 import jmind.pigg.operator.Pigg;
 import jmind.pigg.util.Strings;
 
