@@ -68,7 +68,7 @@ public class CustomCrudDaoTest {
 
     assertThat(dao.getById(co.getId()), equalTo(co));
     assertThat(dao.getByUserIdAndId(co.getUserId(), co.getId()), equalTo(co));
-    HashSet<CrudOrder> actualCos = Sets.newHashSet(dao.getByIdIn(ids));
+    HashSet<CrudOrder> actualCos = Sets.newHashSet(dao.findByIdIn(ids));
     assertThat(actualCos, equalTo(cos));
     assertThat(dao.countByUserId(userId), equalTo(2));
     assertThat(dao.deleteByUserId(userId), equalTo(2));
@@ -130,7 +130,7 @@ public class CustomCrudDaoTest {
 
     CrudOrder getById(String id);
 
-    List<CrudOrder> getByIdIn(List<String> ids);
+    List<CrudOrder> findByIdIn(List<String> ids);
 
     CrudOrder getByUserIdAndId(int userId, String id);
 
