@@ -21,6 +21,7 @@ package jmind.pigg.plugin.page;
  */
 public class Page {
 
+  // 是否自动查询页面总数，默认true
   private boolean isFetchTotal = true;
   /**
    * 页码，从1开始
@@ -34,8 +35,9 @@ public class Page {
   private long totalNum;
   private String groupBy ;
   private String orderBy;
-
+  // 查询结果集
   private Object result ;
+
 
   public String getGroupBy() {
     return groupBy;
