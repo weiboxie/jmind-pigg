@@ -1,12 +1,10 @@
 package jmind.pigg.plugin.spring;
 
-import jmind.base.annotation.CacheMonitor;
 import jmind.pigg.annotation.Transactional;
 import jmind.pigg.transaction.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.annotation.Annotation;
@@ -20,22 +18,21 @@ import java.lang.reflect.Method;
 @Aspect
 public class TransactionAspect {
 
-    @Pointcut("@annotation(jmind.pigg.annotation.Transactional)")
-    public void limit() {
-    }
+//    @Pointcut("@annotation(jmind.pigg.annotation.Transactional)")
+//    public void limit() {
+//    }
 
-    @Around("limit()")
-    public Object around(ProceedingJoinPoint pjp) throws Throwable {
+    @Around(value = "execution(* *(..)) && @annotation(transactional)", argNames = "pjp,transactional")
+    public Object around(ProceedingJoinPoint pjp,Transactional transactional) throws Throwable {
 
-        final Transactional m = getAnnotation(pjp, Transactional.class);
-        Transaction tx = TransactionFactory.newTransaction(m.value());
+        Transaction tx = TransactionFactory.newTransaction(transactional.value());
         try {
             Object r = pjp.proceed();
             tx.commit();
             return r;
         } catch (Throwable e) {
             // 只有是指定的异常才回滚，默认是 RuntimeException 和ERROR
-            for(Class<? extends Throwable> exs:m.rollbackFor()){
+            for(Class<? extends Throwable> exs:transactional.rollbackFor()){
                 //if(exs.isAssignableFrom(e.getClass())){
                 if(exs.isInstance(e)){
                     tx.rollback();
