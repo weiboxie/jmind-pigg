@@ -105,4 +105,8 @@ public void setGroupBy(String groupBy) {
   public void setResult(Object result) {
     this.result = result;
   }
+
+  public int getStart(){
+    return (page-1)*pageSize;
+  }
 }
