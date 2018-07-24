@@ -36,19 +36,19 @@ public class AutoPiggFactoryBean extends AbstractPiggFactoryBean implements Appl
         for(Map.Entry<String,DataSource> entry:dataSourceMap.entrySet()){
             dsf.add(new SimpleDataSourceFactory(entry.getKey(),entry.getValue()));
         }
-        Pigg mango = Pigg.newInstance(dsf);
+        Pigg pigg = Pigg.newInstance(dsf);
         if(applicationContext.containsBean(CacheHandler.class.getName())){
-            mango.setCacheHandler(applicationContext.getBean(CacheHandler.class));
+            pigg.setCacheHandler(applicationContext.getBean(CacheHandler.class));
         }
 
         // 添加拦截器
      Map<String, Interceptor> interceptorMap = applicationContext.getBeansOfType(Interceptor.class);
         if(!interceptorMap.isEmpty()){
             for(Map.Entry<String,Interceptor> entry:interceptorMap.entrySet()){
-                mango.addInterceptor(entry.getValue());
+                pigg.addInterceptor(entry.getValue());
             }
         }
-        return  mango;
+        return  pigg;
     }
 
     @Override
