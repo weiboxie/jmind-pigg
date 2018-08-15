@@ -33,19 +33,11 @@ public class Page {
   private int pageSize=20;
 
   private long totalNum;
-  private String groupBy ;
   private String orderBy;
   // 查询结果集
   private Object result ;
 
 
-  public String getGroupBy() {
-    return groupBy;
-}
-
-public void setGroupBy(String groupBy) {
-    this.groupBy = groupBy;
-}
 
   public String getOrderBy() {
     return orderBy;

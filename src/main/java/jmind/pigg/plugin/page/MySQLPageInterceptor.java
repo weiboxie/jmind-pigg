@@ -42,9 +42,7 @@ public class MySQLPageInterceptor extends AbstractPageInterceptor {
   @Override
   void handlePage(Page page, InvocationContext context) {
     int startRow = (page.getPage() - 1) * page.getPageSize();
-    if(DataUtil.isNotEmpty(page.getGroupBy())){
-      context.writeToSqlBuffer(" group by "+page.getGroupBy());
-    }
+
     if(DataUtil.isNotEmpty(page.getOrderBy())){
       context.writeToSqlBuffer(" order by "+page.getOrderBy()) ;
     }

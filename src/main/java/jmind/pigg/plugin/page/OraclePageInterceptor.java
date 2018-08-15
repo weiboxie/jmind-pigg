@@ -40,9 +40,7 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
 
     @Override
     void handlePage(Page page, InvocationContext context) {
-        if (DataUtil.isNotEmpty(page.getGroupBy())) {
-            context.writeToSqlBuffer(" group by " + page.getGroupBy());
-        }
+
         if (DataUtil.isNotEmpty(page.getOrderBy())) {
             context.writeToSqlBuffer(" order by " + page.getOrderBy());
         }
@@ -58,9 +56,7 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
         int startRow = (page.getPage() - 1) * page.getPageSize();
         int endRow = page.getPage() * page.getPageSize();
         String sql = boundSql.getSql();
-        if (DataUtil.isNotEmpty(page.getGroupBy())) {
-            sql += " group by " + page.getGroupBy();
-        }
+
         if (DataUtil.isNotEmpty(page.getOrderBy())) {
             sql += " order by " + page.getOrderBy();
         }
