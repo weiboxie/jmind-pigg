@@ -16,10 +16,12 @@
 
 package jmind.pigg.plugin.page;
 
+import java.io.Serializable;
+
 /**
  * @author xieweibo
  */
-public class Page {
+public class Page implements Serializable {
 
   // 是否自动查询页面总数，默认true
   private boolean isFetchTotal = true;
