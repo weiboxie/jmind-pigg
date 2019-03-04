@@ -8,6 +8,7 @@ import java.lang.annotation.*;
 /**
  * @Author: xieweibo
  * https://blog.csdn.net/blueheart20/article/details/44654007
+ * http://www.jfaster.org/transaction.html
  * @Date: 2018/4/17
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
