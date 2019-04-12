@@ -16,13 +16,10 @@
 
 package jmind.pigg.interceptor;
 
-import javax.sql.DataSource;
-
-import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
 import jmind.pigg.util.jdbc.SQLType;
 
-import java.util.List;
+import javax.sql.DataSource;
 
 /**
  * 读拦截器
@@ -37,14 +34,16 @@ public abstract class QueryInterceptor implements Interceptor {
 
   @Override
   public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
-    if(!sqlType.needChangeData())
-        interceptQuery(context, dataSource);
+    if(!sqlType.needChangeData()) {
+      interceptQuery(context, dataSource);
+    }
   }
 
   @Override
   public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
-    if(!sqlType.needChangeData())
-        interceptResult(context, result);
+    if(!sqlType.needChangeData()) {
+      interceptResult(context, result);
+    }
   }
 
 

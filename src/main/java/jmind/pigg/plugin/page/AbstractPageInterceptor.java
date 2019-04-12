@@ -63,6 +63,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
 
     }
 
+    @Override
     public  void interceptResult(InvocationContext context, Object result){
         List<Object> values = context.getParameterValues();
         for(int i=values.size()-1;i>=0;i--){
