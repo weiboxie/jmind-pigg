@@ -17,8 +17,9 @@
 package jmind.pigg.invoker.function.json;
 
 import com.alibaba.fastjson.JSON;
-
 import jmind.pigg.invoker.RuntimeSetterFunction;
+import jmind.pigg.util.logging.InternalLogger;
+import jmind.pigg.util.logging.InternalLoggerFactory;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
@@ -30,10 +31,20 @@ import java.lang.reflect.Type;
  */
 public class FastjsonToObjectFunction implements RuntimeSetterFunction<String, Object> {
 
+  private final static InternalLogger logger = InternalLoggerFactory.getInstance(FastjsonToObjectFunction.class);
+
   @Nullable
   @Override
   public Object apply(@Nullable String input, Type runtimeOutputType) {
-    return input == null ? null : JSON.parseObject(input, runtimeOutputType);
+    if(input==null){
+      return null ;
+    }
+    try {
+      return JSON.parseObject(input, runtimeOutputType);
+    } catch (Exception e) {
+      logger.error("FastjsonToObjectFunction parse "+input,e);
+      return null ;
+    }
   }
 
 }
