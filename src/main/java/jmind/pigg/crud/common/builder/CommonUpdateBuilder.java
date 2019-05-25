@@ -53,7 +53,7 @@ public class CommonUpdateBuilder implements Builder {
         String keyCol = columnId + " = :" + propertyId;
         StringBuilder exps = new StringBuilder(keyCol);
         for (int i = 0; i < properties.size(); i++) {
-            exps.append(" #if(:" + properties.get(i) + ") ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
+            exps.append(" #if(:" + properties.get(i) + "!=null) ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
         }
         return String.format(SQL_TEMPLATE, exps.toString(), keyCol);
     }
