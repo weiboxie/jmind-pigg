@@ -44,21 +44,29 @@ public interface CrudRepository<T, ID> extends Generic<T, ID> {
     int saveAndGeneratedId(T entity);
     void save(Collection<T> entities);
     /**
-     * update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
-     *
-     * @param entity
-     * @return
+     * update，updateNotNull，updateAllField 区别 。
+     * updateAllField 修改所有字段 ，
+     * updateNotNull 修改非 null 属性字段
+     * update  修改 非null ，非空字段属性
      */
     int update(T entity);
     int[] update(Collection<T> entities);
     /**
-     * update 和updateAllField 区别 。updateAllField 修改所有字段 ，update 修改非 null 属性字段
-     *
-     * @param entity
-     * @return
+     * update，updateNotNull，updateAllField 区别 。
+     * updateAllField 修改所有字段 ，
+     * updateNotNull 修改非 null 属性字段
+     * update  修改 非null ，非空字段属性
      */
     int updateAllField(T entity);
     int[] updateAllField(Collection<T> entities);
+
+    /**
+     *  修改非null属性
+     * @param entity
+     * @return
+     */
+    int updateNotNull(T entity);
+    int[] updateNotNull(Collection<T> entities);
     int delete(ID id);
     // 目前此接口只支持mysql
     int replace(T entity);

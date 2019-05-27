@@ -22,6 +22,7 @@ import java.util.List;
 import jmind.pigg.crud.Builder;
 
 /**
+ * 修改非null 或者非空字段
  * @author xieweibo
  */
 public class CommonUpdateBuilder implements Builder {
@@ -42,8 +43,8 @@ public class CommonUpdateBuilder implements Builder {
             throw new IllegalArgumentException("error property id [" + propId + "]");
         }
         propertyId = propId;
-        properties = new ArrayList<String>(props);
-        columns = new ArrayList<String>(cols);
+        properties = new ArrayList<>(props);
+        columns = new ArrayList<>(cols);
         columnId = columns.remove(index);
         properties.remove(index);
     }
@@ -53,7 +54,7 @@ public class CommonUpdateBuilder implements Builder {
         String keyCol = columnId + " = :" + propertyId;
         StringBuilder exps = new StringBuilder(keyCol);
         for (int i = 0; i < properties.size(); i++) {
-            exps.append(" #if(:" + properties.get(i) + "!=null) ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
+            exps.append(" #if(:" + properties.get(i) + ") ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
         }
         return String.format(SQL_TEMPLATE, exps.toString(), keyCol);
     }

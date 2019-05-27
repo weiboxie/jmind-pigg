@@ -16,18 +16,16 @@
 
 package jmind.pigg.crud.common.builder;
 
-import jmind.base.util.DataUtil;
-import jmind.base.util.GlobalConstants;
 import jmind.pigg.crud.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 修改所有字段
+ * 修改所有非null 字段
  * @author xieweibo
  */
-public class CommonUpdateAllFieldBuilder implements Builder {
+public class CommonUpdateNotNullBuilder implements Builder {
 
     private final static String SQL_TEMPLATE = "update #table set %s where %s";
 
@@ -39,28 +37,26 @@ public class CommonUpdateAllFieldBuilder implements Builder {
 
     private final List<String> columns;
 
-    public CommonUpdateAllFieldBuilder(String propId, List<String> props, List<String> cols) {
+    public CommonUpdateNotNullBuilder(String propId, List<String> props, List<String> cols) {
         int index = props.indexOf(propId);
         if (index < 0) {
             throw new IllegalArgumentException("error property id [" + propId + "]");
         }
         propertyId = propId;
-        properties = new ArrayList<String>(props);
-        columns = new ArrayList<String>(cols);
+        properties = new ArrayList<>(props);
+        columns = new ArrayList<>(cols);
         columnId = columns.remove(index);
         properties.remove(index);
     }
 
     @Override
     public String buildSql() {
-        List<String> exps = new ArrayList<String>();
+        String keyCol = columnId + " = :" + propertyId;
+        StringBuilder exps = new StringBuilder(keyCol);
         for (int i = 0; i < properties.size(); i++) {
-            String exp = columns.get(i) + " = :" + properties.get(i);
-            exps.add(exp);
+            exps.append(" #if(:" + properties.get(i) + "!=null) ," + columns.get(i) + " = :" + properties.get(i) + " #end ");
         }
-        String s1 = DataUtil.join(exps, GlobalConstants.COMMA);
-        String s2 = columnId + " = :" + propertyId;
-        return String.format(SQL_TEMPLATE, s1, s2);
+        return String.format(SQL_TEMPLATE, exps.toString(), keyCol);
     }
 
 }
