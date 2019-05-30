@@ -2,23 +2,23 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans>
-    <bean class="org.jfaster.mango.plugin.spring.MangoDaoScanner">
+    <bean class="jmind.pigg.plugin.spring.PiggDaoScanner">
         <property name="packages">
             <list>
-                <value>org.jfaster.mango.plugin.spring</value>
+                <value>jmind.pigg.plugin.spring</value>
             </list>
         </property>
 
         <property name="factoryBeanClass">
-            <value>org.jfaster.mango.plugin.spring.DefaultMangoFactoryBean</value>
+            <value>jmind.pigg.plugin.spring.DefaultPiggFactoryBean</value>
         </property>
     </bean>
 
-    <bean class="org.jfaster.mango.operator.Mango">
+    <bean class="jmind.pigg.operator.Pigg">
         <property name="dataSource" ref="dmds" />
     </bean>
 
-    <bean id="dmds" class="org.jfaster.mango.datasource.DriverManagerDataSource">
+    <bean id="dmds" class="jmind.pigg.datasource.DriverManagerDataSource">
         <constructor-arg index="0" type="java.lang.String" value="org.hsqldb.jdbcDriver"/>
         <constructor-arg index="1" type="java.lang.String" value=""/>
         <constructor-arg index="2" type="java.lang.String" value=""/>
