@@ -17,6 +17,7 @@
 package jmind.pigg.plugin.page;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @author xieweibo
@@ -30,7 +31,7 @@ public class Page implements Serializable {
    */
   private int page=1;
   /**
-   * 页面大小
+   * 每页条数
    */
   private int pageSize=20;
 
@@ -102,5 +103,23 @@ public class Page implements Serializable {
 
   public int getStart(){
     return (page-1)*pageSize;
+  }
+
+  /**
+   * 总页数
+   * @return
+   */
+  public int getPages(){
+    return ((int)totalNum+pageSize-1)/pageSize;
+  }
+
+  public boolean  hasNext(){
+    if(result!=null){
+       if(result instanceof Collection){
+        return  ((Collection) result).size()>= pageSize;
+       }
+    }
+
+    return  false;
   }
 }
