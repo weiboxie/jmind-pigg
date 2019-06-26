@@ -110,10 +110,16 @@ public class Page implements Serializable {
    * @return
    */
   public int getPages(){
+    if(pageSize==0){
+      return 0;
+    }
     return ((int)totalNum+pageSize-1)/pageSize;
   }
 
-  public boolean  hasNext(){
+  public boolean  isHasNext(){
+    if(totalNum>0){
+       return page<getPages();
+    }
     if(result!=null){
        if(result instanceof Collection){
         return  ((Collection) result).size()>= pageSize;
