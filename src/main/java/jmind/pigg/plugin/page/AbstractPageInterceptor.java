@@ -40,7 +40,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
                 int pageNum = page.getPage();
                 int pageSize = page.getPageSize();
                 if (pageNum <= 0) {
-                    throw new PageException("pageNum need > 0, but pageNum is " + pageNum);
+                    throw new PageException("页码page需要大于0, but page is " + pageNum);
                 }
                 if (pageSize <= 0) {
                     throw new PageException("pageSize need > 0, but pageSize is " + pageSize);
