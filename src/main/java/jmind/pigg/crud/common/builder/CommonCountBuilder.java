@@ -23,7 +23,7 @@ import jmind.pigg.crud.Builder;
  */
 public class CommonCountBuilder implements Builder {
 
-  private final static String SQL = "select count(1) from #table";
+  private final static String SQL = "select count(*) from #table";
 
   @Override
   public String buildSql() {
