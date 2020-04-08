@@ -34,7 +34,7 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
     @Override
     void handleTotal(BoundSql boundSql) {
         String sql = boundSql.getSql();
-        sql = "SELECT COUNT(1) FROM (" + sql + ") aliasForPage";
+        sql = "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
         boundSql.setSql(sql);
     }
 
