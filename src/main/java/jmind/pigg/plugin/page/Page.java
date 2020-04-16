@@ -128,4 +128,8 @@ public class Page implements Serializable {
 
     return  false;
   }
+
+  public String toString(){
+    return "{page:"+page+",pageSize:"+pageSize+"}";
+  }
 }
