@@ -16,6 +16,8 @@
 
 package jmind.pigg.plugin.page;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -132,4 +134,5 @@ public class Page implements Serializable {
   public String toString(){
     return "{page:"+page+",pageSize:"+pageSize+"}";
   }
+
 }
