@@ -42,6 +42,8 @@ public interface CrudRepository<T, ID> extends Generic<T, ID> {
     int save(T entity);
     @GeneratedId
     int saveAndGeneratedId(T entity);
+    @GeneratedId
+    long saveReturnLongId(T entity);
     void save(Collection<T> entities);
     /**
      * update，updateNotNull，updateAllField 区别 。
