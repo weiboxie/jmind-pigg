@@ -75,8 +75,8 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
          }
     }
 
-    abstract void handleTotal(BoundSql boundSql);
+   public abstract void handleTotal(BoundSql boundSql);
 
-    abstract void handlePage(Page page, InvocationContext context);
+   public abstract void handlePage(Page page, InvocationContext context);
 
 }

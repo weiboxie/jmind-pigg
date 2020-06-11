@@ -130,7 +130,7 @@ public class Page implements Serializable {
   }
 
   public String toString(){
-    return "{page:"+page+",pageSize:"+pageSize+"}";
+    return "{page:"+page+",pageSize:"+pageSize+",totalNum:"+totalNum+"}";
   }
 
 }
