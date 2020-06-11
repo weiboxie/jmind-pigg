@@ -33,14 +33,14 @@ import java.util.List;
 public class MySQLPageInterceptor extends AbstractPageInterceptor {
 
   @Override
-  void handleTotal(BoundSql boundSql) {
+  public void handleTotal(BoundSql boundSql) {
     String sql = boundSql.getSql();
     sql = "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
     boundSql.setSql(sql);
   }
 
   @Override
-  void handlePage(Page page, InvocationContext context) {
+  public void handlePage(Page page, InvocationContext context) {
     int startRow = (page.getPage() - 1) * page.getPageSize();
 
     if(DataUtil.isNotEmpty(page.getOrderBy())){

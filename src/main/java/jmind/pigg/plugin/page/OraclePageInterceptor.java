@@ -32,14 +32,14 @@ import java.util.List;
 public class OraclePageInterceptor extends AbstractPageInterceptor {
 
     @Override
-    void handleTotal(BoundSql boundSql) {
+    public void handleTotal(BoundSql boundSql) {
         String sql = boundSql.getSql();
         sql = "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
         boundSql.setSql(sql);
     }
 
     @Override
-    void handlePage(Page page, InvocationContext context) {
+   public void handlePage(Page page, InvocationContext context) {
 
         if (DataUtil.isNotEmpty(page.getOrderBy())) {
             context.writeToSqlBuffer(" order by " + page.getOrderBy());
