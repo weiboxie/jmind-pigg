@@ -17,6 +17,8 @@
 package jmind.pigg.util;
 
 import jmind.base.util.DataUtil;
+import jmind.pigg.security.SqlFilter;
+import jmind.pigg.security.SqlFilterImpl;
 import org.slf4j.helpers.MessageFormatter;
 
 
@@ -26,6 +28,7 @@ import org.slf4j.helpers.MessageFormatter;
  */
 public class Strings {
 
+ private final static SqlFilter sqlFilter=new SqlFilterImpl();
 
   public static String getFullName(String name, String path) {
     return ":" + (DataUtil.isNotEmpty(path) ? name + "." + path : name);
@@ -35,6 +38,12 @@ public class Strings {
     return MessageFormatter.arrayFormat(pattern, arguments).getMessage();
   }
 
+  public  static String trimSql(String sql){
+     return  sqlFilter.trimSql(sql);
+  }
 
+    public  static String safeSql(String sql){
+        return  sqlFilter.safeSql(sql);
+    }
 
 }
