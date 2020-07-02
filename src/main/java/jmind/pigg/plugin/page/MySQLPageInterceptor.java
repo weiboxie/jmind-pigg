@@ -33,7 +33,7 @@ import java.util.List;
 public class MySQLPageInterceptor extends AbstractPageInterceptor {
 
   @Override
-  public void handleTotal(BoundSql boundSql) {
+  public void handleTotal(Page page,BoundSql boundSql) {
     String sql = boundSql.getSql();
     sql = "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
     boundSql.setSql(sql);

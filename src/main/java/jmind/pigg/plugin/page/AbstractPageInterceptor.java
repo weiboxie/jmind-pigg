@@ -49,7 +49,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
                 // 获取总数
                 if (page.isFetchTotal()) {
                     BoundSql totalBoundSql = context.getBoundSql();
-                    handleTotal(totalBoundSql);
+                    handleTotal(page,totalBoundSql);
                     SingleColumnRowMapper<Long> mapper = new SingleColumnRowMapper<Long>(long.class);
                     long total = JdbcOperationsFactory.getJdbcOperations().queryForObject(dataSource, totalBoundSql, mapper);
                     page.setTotalNum(total);
@@ -75,7 +75,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
          }
     }
 
-   public abstract void handleTotal(BoundSql boundSql);
+   public abstract void handleTotal(Page page, BoundSql boundSql);
 
    public abstract void handlePage(Page page, InvocationContext context);
 
