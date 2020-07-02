@@ -26,6 +26,10 @@ public class Page implements Serializable {
 
   // 是否自动查询页面总数，默认true
   private boolean isFetchTotal = true;
+  // 是否优化分页
+  private boolean optimizedCount =true ;
+  // 是否倒排
+  private boolean desc ;
   /**
    * 页码，从1开始
    */
@@ -103,6 +107,22 @@ public class Page implements Serializable {
 
   public int getStart(){
     return (page-1)*pageSize;
+  }
+
+  public boolean isOptimizedCount() {
+    return optimizedCount;
+  }
+
+  public void setOptimizedCount(boolean optimizedCount) {
+    this.optimizedCount = optimizedCount;
+  }
+
+  public boolean isDesc() {
+    return desc;
+  }
+
+  public void setDesc(boolean desc) {
+    this.desc = desc;
   }
 
   /**
