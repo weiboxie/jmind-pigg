@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.descriptor.ParameterDescriptor;
 import jmind.pigg.util.jdbc.SQLType;
 
@@ -58,16 +59,16 @@ public class InvocationInterceptorChain {
 //    }
 //  }
 
-  public void preIntercept(InvocationContext context,  DataSource dataSource) {
+  public void preIntercept(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
       if(interceptorChain!=null){
-        interceptorChain.preIntercept(context, sqlType, dataSource);
+        interceptorChain.preIntercept(context, sqlType,md, dataSource);
       }
   }
 
 
-  public void postIntercept(InvocationContext context, Object result) {
+  public void postIntercept(InvocationContext context,MethodDescriptor md,DataSource dataSource, Object result) {
      if(interceptorChain!=null){
-       interceptorChain.postIntercept(context,sqlType,result);
+       interceptorChain.postIntercept(context,sqlType,md,dataSource,result);
      }
   }
 

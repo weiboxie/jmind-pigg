@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.List;
@@ -31,16 +32,21 @@ public abstract class UpdateInterceptor  implements Interceptor {
 
 
 
-  public abstract void interceptUpdate(InvocationContext context, DataSource dataSource);
+  public abstract void interceptUpdate(InvocationContext context,MethodDescriptor md, DataSource dataSource);
+
+  public abstract void interceptResult(InvocationContext context,MethodDescriptor md, DataSource dataSource,Object result);
 
   @Override
-  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
-        if(sqlType.needChangeData())
-            interceptUpdate(context,dataSource);
+  public void preIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource) {
+        if(sqlType.needChangeData()) {
+            interceptUpdate(context,md, dataSource);
+        }
   }
 
   @Override
-  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
-       // do nothing
+  public void postIntercept(InvocationContext context, SQLType sqlType,MethodDescriptor md, DataSource dataSource, Object result) {
+       if(sqlType.needChangeData()){
+           interceptResult(context, md, dataSource,result);
+       }
   }
 }

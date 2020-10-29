@@ -17,6 +17,7 @@
 package jmind.pigg.interceptor;
 
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.util.jdbc.SQLType;
 
 import javax.sql.DataSource;
@@ -28,21 +29,21 @@ import javax.sql.DataSource;
 public abstract class QueryInterceptor implements Interceptor {
 
 
-  public abstract void interceptQuery(InvocationContext context, DataSource dataSource);
+  public abstract void interceptQuery(InvocationContext context,MethodDescriptor md,  DataSource dataSource);
 
-  public abstract void interceptResult(InvocationContext context, Object result);
+  public abstract void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource,Object result);
 
   @Override
-  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+  public void preIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource) {
     if(!sqlType.needChangeData()) {
-      interceptQuery(context, dataSource);
+      interceptQuery(context, md,dataSource);
     }
   }
 
   @Override
-  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+  public void postIntercept(InvocationContext context, SQLType sqlType,MethodDescriptor md, DataSource dataSource, Object result) {
     if(!sqlType.needChangeData()) {
-      interceptResult(context, result);
+      interceptResult(context,md,dataSource, result);
     }
   }
 

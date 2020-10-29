@@ -18,6 +18,7 @@ package jmind.pigg.operator;
 
 import javax.sql.DataSource;
 
+import jmind.base.lang.Pair;
 import jmind.base.util.Iterables;
 import jmind.base.util.ToStringHelper;
 import jmind.pigg.binding.BoundSql;
@@ -57,16 +58,25 @@ public class BatchUpdateOperator extends AbstractOperator {
     }
 
     Map<DataSource, Group> gorupMap = new HashMap<DataSource, Group>();
+    List<Pair<InvocationContext,DataSource>> pairs=new ArrayList<>();
     int t = 0;
     for (Object obj : iterables) {
       InvocationContext context = invocationContextFactory.newInvocationContext(new Object[]{obj});
-      group(context, gorupMap, t++);
+      DataSource ds = group(context, gorupMap, t++);
+      invocationInterceptorChain.preIntercept(context, methodDescriptor,ds); // 拦截器
+      pairs.add(Pair.of(context,ds));
     }
     int[] ints = executeDb(gorupMap, t, stat);
+    if(pairs.size()==ints.length){  //  执行完之后拦截
+      for(int i=0;i<ints.length;i++){
+        Pair<InvocationContext, DataSource> pair = pairs.get(i);
+        invocationInterceptorChain.postIntercept(pair.getFirst(),methodDescriptor,pair.getSecond(),ints[i]);
+      }
+    }
     return transformer.transform(ints);
   }
 
-  protected void group(InvocationContext context, Map<DataSource, Group> groupMap, int position) {
+  protected DataSource group(InvocationContext context, Map<DataSource, Group> groupMap, int position) {
     context.setGlobalTable(tableGenerator.getTable(context));
     DataSource ds = dataSourceGenerator.getDataSource(context, daoClass);
     Group group = groupMap.get(ds);
@@ -74,10 +84,10 @@ public class BatchUpdateOperator extends AbstractOperator {
       group = new Group();
       groupMap.put(ds, group);
     }
-
     rootNode.render(context);
-    invocationInterceptorChain.preIntercept(context, ds); // 拦截器
     group.add(context.getBoundSql(), position);
+    return ds;
+
   }
 
   protected Iterables getIterables(Object[] values) {

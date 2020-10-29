@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.LinkedList;
@@ -36,16 +37,16 @@ public class InterceptorChain {
     interceptors.add(interceptor);
   }
 
-  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+  public void preIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource) {
       for (Interceptor interceptor : interceptors) {
-        interceptor.preIntercept(context, sqlType, dataSource);
+        interceptor.preIntercept(context, sqlType, md,dataSource);
     }
   }
 
 // 后置拦截器应该导过来循环
-  public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+  public void postIntercept(InvocationContext context, SQLType sqlType,MethodDescriptor md, DataSource dataSource,Object result) {
     for (int i=interceptors.size()-1;i>=0;i--) {
-      interceptors.get(i).postIntercept(context, sqlType, result);
+      interceptors.get(i).postIntercept(context, sqlType,md,dataSource, result);
     }
   }
 

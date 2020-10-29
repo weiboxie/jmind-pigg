@@ -40,6 +40,8 @@ public abstract class AbstractOperator implements Operator {
    */
   protected final Class<?> daoClass;
 
+  protected final MethodDescriptor methodDescriptor;
+
   /**
    * 拦截器链
    */
@@ -73,6 +75,7 @@ public abstract class AbstractOperator implements Operator {
     this.rootNode = rootNode;
     this.daoClass = md.getDaoClass();
     this.config = config.copy();
+    this.methodDescriptor=md;
     mergeConfig(md);
   }
 

@@ -17,6 +17,7 @@
 package jmind.pigg.interceptor;
 
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,7 +65,12 @@ public class InterceptorSQLTypeTest {
 
 
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -76,13 +82,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new QueryInterceptor() {
 
+
       @Override
-      public void interceptQuery(InvocationContext context, DataSource dataSource) {
+      public void interceptQuery(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
 
       }
 
       @Override
-      public void interceptResult(InvocationContext context, Object result) {
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -93,8 +100,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
 
+
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -107,8 +120,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
 
+
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -119,8 +138,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
 
+
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -136,8 +161,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
 
+
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });
@@ -153,8 +184,14 @@ public class InterceptorSQLTypeTest {
     pigg = Pigg.newInstance(ds);
     pigg.addInterceptor(new UpdateInterceptor() {
 
+
       @Override
-      public void interceptUpdate(InvocationContext context, DataSource dataSource) {
+      public void interceptUpdate(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
+
+      }
+
+      @Override
+      public void interceptResult(InvocationContext context, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });

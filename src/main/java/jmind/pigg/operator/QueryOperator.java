@@ -91,9 +91,9 @@ public class QueryOperator extends AbstractOperator {
     }
 
     DataSource ds = dataSourceGenerator.getDataSource(context, daoClass);
-    invocationInterceptorChain.preIntercept(context, ds); // 拦截器 前置方法
+    invocationInterceptorChain.preIntercept(context, methodDescriptor,ds); // 拦截器 前置方法
     Object result = executeFromDb(ds, context.getBoundSql(), stat);
-    invocationInterceptorChain.postIntercept(context,result);// 拦截器 后置方法
+    invocationInterceptorChain.postIntercept(context,methodDescriptor,ds,result);// 拦截器 后置方法
     return result;
   }
 

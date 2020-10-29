@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.util.jdbc.SQLType;
 
 import java.util.List;
@@ -29,9 +30,11 @@ import java.util.List;
  */
 public interface Interceptor {
 
-  public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource);
+   void preIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource);
 
 
-  public void postIntercept(InvocationContext context, SQLType sqlType,Object result);
+   void postIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource,Object result);
+
+
 
 }

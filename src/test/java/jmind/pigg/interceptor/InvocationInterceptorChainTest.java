@@ -16,6 +16,7 @@
 
 package jmind.pigg.interceptor;
 
+import jmind.pigg.descriptor.MethodDescriptor;
 import org.junit.Test;
 
 import jmind.pigg.binding.BoundSql;
@@ -58,13 +59,14 @@ public class InvocationInterceptorChainTest {
     InterceptorChain ic = new InterceptorChain();
     ic.addInterceptor(new Interceptor() {
 
+
       @Override
-      public void preIntercept(InvocationContext context, SQLType sqlType, DataSource dataSource) {
+      public void preIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource) {
 
       }
 
       @Override
-      public void postIntercept(InvocationContext context, SQLType sqlType, Object result) {
+      public void postIntercept(InvocationContext context, SQLType sqlType, MethodDescriptor md, DataSource dataSource, Object result) {
 
       }
     });

@@ -96,9 +96,9 @@ public class UpdateOperator extends AbstractOperator {
 
 
     DataSource ds = dataSourceGenerator.getDataSource(context, daoClass);
-    invocationInterceptorChain.preIntercept(context, ds);  // 拦截器
+    invocationInterceptorChain.preIntercept(context, methodDescriptor,ds);  // 拦截器
     Number r = executeDb(ds, context.getBoundSql(), stat);
-    invocationInterceptorChain.postIntercept(context, r);  // 拦截器
+    invocationInterceptorChain.postIntercept(context,methodDescriptor,ds, r);  // 拦截器
     return transformer.transform(r);
   }
 

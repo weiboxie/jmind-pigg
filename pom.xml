@@ -9,7 +9,7 @@
      <modelVersion>4.0.0</modelVersion>
     <artifactId>jmind-pigg</artifactId>
     <packaging>jar</packaging>
-
+    <version>2.1.2-SNAPSHOT</version>
     <name>jmind-pigg</name>
    <url>https://git.oschina.net/jmind/jmind-pigg</url>
     <description>Distributed ORM Framework for Java</description>

@@ -18,6 +18,7 @@ package jmind.pigg.plugin.page;
 
 import jmind.pigg.binding.BoundSql;
 import jmind.pigg.binding.InvocationContext;
+import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.interceptor.QueryInterceptor;
 import jmind.pigg.jdbc.JdbcOperationsFactory;
 import jmind.pigg.mapper.SingleColumnRowMapper;
@@ -31,7 +32,7 @@ import java.util.List;
 public abstract class AbstractPageInterceptor extends QueryInterceptor {
 
     @Override
-    public void interceptQuery(InvocationContext context, DataSource dataSource) {
+    public void interceptQuery(InvocationContext context, MethodDescriptor md, DataSource dataSource) {
         List<Object> values = context.getParameterValues();
         for(int i=values.size()-1;i>=0;i--){ // 一般把最后一个参数放Page，倒叙循环，提高性能
             if(values.get(i) instanceof Page){
@@ -64,7 +65,7 @@ public abstract class AbstractPageInterceptor extends QueryInterceptor {
     }
 
     @Override
-    public  void interceptResult(InvocationContext context, Object result){
+    public  void interceptResult(InvocationContext context,MethodDescriptor md, DataSource dataSource, Object result){
         List<Object> values = context.getParameterValues();
         for(int i=values.size()-1;i>=0;i--){
              if(values.get(i) instanceof Page){
