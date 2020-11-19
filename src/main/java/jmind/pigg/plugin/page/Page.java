@@ -28,8 +28,7 @@ public class Page implements Serializable {
   private boolean isFetchTotal = true;
   // 是否优化分页
   private boolean optimizedCount =true ;
-  // 是否倒排
-  private boolean desc ;
+
   /**
    * 页码，从1开始
    */
@@ -46,11 +45,11 @@ public class Page implements Serializable {
 
 
 
-  public String getOrderBy() {
+  public String orderBy() {
     return orderBy;
   }
 
-  public void setOrderBy(String orderBy) {
+  public void orderBy(String orderBy) {
     this.orderBy = orderBy;
   }
 
@@ -117,13 +116,6 @@ public class Page implements Serializable {
     this.optimizedCount = optimizedCount;
   }
 
-  public boolean isDesc() {
-    return desc;
-  }
-
-  public void setDesc(boolean desc) {
-    this.desc = desc;
-  }
 
   /**
    * 总页数

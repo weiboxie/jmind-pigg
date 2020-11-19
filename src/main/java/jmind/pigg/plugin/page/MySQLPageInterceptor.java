@@ -43,8 +43,8 @@ public class MySQLPageInterceptor extends AbstractPageInterceptor {
   public void handlePage(Page page, InvocationContext context) {
     int startRow = (page.getPage() - 1) * page.getPageSize();
 
-    if(DataUtil.isNotEmpty(page.getOrderBy())){
-      context.writeToSqlBuffer(" order by "+page.getOrderBy()) ;
+    if(DataUtil.isNotEmpty(page.orderBy())){
+      context.writeToSqlBuffer(" order by "+page.orderBy()) ;
     }
 
     context.writeToSqlBuffer(" limit ?, ?");
