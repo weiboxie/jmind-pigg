@@ -41,8 +41,8 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
     @Override
    public void handlePage(Page page, InvocationContext context) {
 
-        if (DataUtil.isNotEmpty(page.getOrderBy())) {
-            context.writeToSqlBuffer(" order by " + page.getOrderBy());
+        if (DataUtil.isNotEmpty(page.orderBy())) {
+            context.writeToSqlBuffer(" order by " + page.orderBy());
         }
 
         int startRow = (page.getPage() - 1) * page.getPageSize();
@@ -57,8 +57,8 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
         int endRow = page.getPage() * page.getPageSize();
         String sql = boundSql.getSql();
 
-        if (DataUtil.isNotEmpty(page.getOrderBy())) {
-            sql += " order by " + page.getOrderBy();
+        if (DataUtil.isNotEmpty(page.orderBy())) {
+            sql += " order by " + page.orderBy();
         }
         sql = "SELECT * FROM ( SELECT B.* , ROWNUM RN FROM (" + sql + ") B WHERE ROWNUM <= "
                 + endRow + " ) WHERE RN > " + startRow;
