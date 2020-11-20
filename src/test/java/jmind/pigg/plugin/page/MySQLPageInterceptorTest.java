@@ -73,7 +73,7 @@ public class MySQLPageInterceptorTest {
       List<Msg> actual = new ArrayList<Msg>();
 
       Page page = Page.create(1, 5);
-     page.setOrderBy(" id desc");
+     page.orderBy(" id desc");
       List<Msg> msgs = dao.getMsgs(1,page);
      System.out.println("ss="+msgs);
 //      assertThat(page.getTotal(), is(10));
