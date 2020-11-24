@@ -28,6 +28,8 @@ public class Page implements Serializable {
   private boolean isFetchTotal = true;
   // 是否优化分页
   private boolean optimizedCount =true ;
+  // 是否有下一页
+  private Boolean hasNext;
 
   /**
    * 页码，从1开始
@@ -129,6 +131,9 @@ public class Page implements Serializable {
   }
 
   public boolean  isHasNext(){
+    if(hasNext!=null){
+      return hasNext;
+    }
     if(totalNum>0){
        return page<getPages();
     }
@@ -139,6 +144,10 @@ public class Page implements Serializable {
     }
 
     return  false;
+  }
+
+  public void setHasNext(boolean hasNext){
+    this.hasNext=hasNext;
   }
 
   public String toString(){
