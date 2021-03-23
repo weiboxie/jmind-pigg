@@ -97,6 +97,7 @@ public class MapperTest {
     @Override
     public Msg mapRow(ResultSet rs, int rowNum) throws SQLException {
       Msg msg = new Msg();
+
       msg.setId(rs.getInt("id"));
       msg.setUid(rs.getInt("uid"));
       msg.setContent(rs.getString("content"));

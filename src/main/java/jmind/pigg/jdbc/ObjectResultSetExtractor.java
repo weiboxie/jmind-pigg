@@ -19,6 +19,7 @@ package jmind.pigg.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jmind.base.util.Primitives;
 import jmind.pigg.mapper.MappingException;
 import jmind.pigg.mapper.RowMapper;
 
@@ -42,11 +43,13 @@ public class ObjectResultSetExtractor<T> implements ResultSetExtractor<T> {
 
     // 原生类型
     if (!rs.next()) {
-      throw new MappingException("no data, can't cast null to primitive type " + mappedClass);
+
+      return Primitives.getPrimitiveDefaultValue(mappedClass);
     }
     T r = rowMapper.mapRow(rs, 0);
     if (r == null) {
-      throw new MappingException("data is null, can't cast null to primitive type " + mappedClass);
+      // throw new MappingException("data is null, can't cast null to primitive type " + mappedClass);
+      return Primitives.getPrimitiveDefaultValue(mappedClass);
     }
     return r;
   }

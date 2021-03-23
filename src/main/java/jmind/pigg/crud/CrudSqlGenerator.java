@@ -22,6 +22,7 @@ import java.util.List;
 import jmind.pigg.crud.common.factory.*;
 import jmind.pigg.crud.custom.factory.CustomCountBuilderFactory;
 import jmind.pigg.crud.custom.factory.CustomDeleteBuilderFactory;
+import jmind.pigg.crud.custom.factory.CustomExistBuilderFactory;
 import jmind.pigg.crud.custom.factory.CustomQueryBuilderFactory;
 import jmind.pigg.descriptor.MethodDescriptor;
 import jmind.pigg.descriptor.SqlGenerator;
@@ -57,6 +58,7 @@ public class CrudSqlGenerator implements SqlGenerator {
     customBuilderFactories.add(new CustomQueryBuilderFactory());
     customBuilderFactories.add(new CustomCountBuilderFactory());
     customBuilderFactories.add(new CustomDeleteBuilderFactory());
+    customBuilderFactories.add(new CustomExistBuilderFactory());
 
 
   }
